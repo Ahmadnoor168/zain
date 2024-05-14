@@ -97,9 +97,7 @@ const Home = () => {
     },
   ];
 
-  const handleTextButtonClick = () => {
-    alert("Text button clicked!");
-  };
+
 
 
 

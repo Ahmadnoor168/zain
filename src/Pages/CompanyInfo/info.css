@@ -1,0 +1,87 @@
+
+.companyContainers {
+    margin: 25px 25px 25px 360px ;
+}
+
+.detail {
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
+    padding: 22px 0 22px 20px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap:6px
+}
+.detail>p {
+    font-size: 28px;
+    font-weight: 600;
+}
+.companyDetail{
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
+    padding: 22px 0 22px 20px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap:20px
+}
+
+.companytemplate{
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
+    padding: 22px 20px 22px 20px;
+    border-radius: 8px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap:30px;
+    margin-bottom: 30px;
+}
+.companytemplate>div{
+    display: flex;
+    gap:20px
+}
+
+.companytemplate>div>label{
+    width: clamp(100px, 100%, 360px);
+    display: block;
+    text-align: left;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.companytemplate>div>input{
+    width: 100%;
+    height: 40px;
+    border: none;
+    outline: none;
+    border: 2px solid #189ce4;
+    border-radius: 6px;
+}
+.BankingText{
+    font-size: 28px;
+    font-weight: 500;
+    color: #189ce4;
+}
+
+.AddBtn{
+    text-align: center;
+
+}
+.AddBtn>button{
+    background-color: #189ce4;
+    border: none;
+    outline: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    gap:5px;
+    color: white;
+    font-size: 16px;
+    letter-spacing: 1.2px;
+    border-radius: 8px;
+    width: 160px;
+    height: 40px;
+}
