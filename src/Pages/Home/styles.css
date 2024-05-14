@@ -1,0 +1,359 @@
+.container {
+    display: flex;
+}
+
+
+.contentContainer {
+    width: 100%;
+    margin-left: 340px;
+    margin: 25px 25px 25px 360px ;
+}
+
+
+
+.detail {
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
+    padding: 22px 0 22px 20px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap:6px
+}
+
+.detail>p {
+    font-size: 28px;
+    font-weight: 600;
+}
+
+.iconButton{
+    height: 35px;
+    width: 35px;
+    background-color: #189ce4;
+    border: none;
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    outline: none;
+}
+.actionButton{
+    height: 35px;
+    border: 2px solid #189ce4;
+    border-radius: 4px;
+    margin-left: 8px;
+    padding: 0 8px;
+    background-color: transparent;
+    cursor: pointer;
+    outline: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #189ce4;
+    text-decoration: none;
+}
+.icon{
+    color: white;
+    font-size: 20px;
+}
+.addClint{
+  background-color: #189ce4;
+  color: white;
+  font-size: 16px;
+  font-weight: 500;
+  border: none;   
+  margin: 25px 0;
+height: 40px;
+padding: 0px 10px;  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap:6px;
+  border-radius: 6px ;
+  cursor: pointer;
+  outline: none;
+}
+.addIcon{
+    font-size: 30px;
+    font-weight: 900;
+}
+.memotab{
+    border: 2px solid #189ce4;
+    width: 180px;
+    text-align: center;
+    padding: 10px 0px;
+    border-radius: 6px; 
+    color: #189ce4  ;   
+    cursor: pointer;
+}
+.memoArrow{
+    position: relative;
+    top:7px;
+    font-size: 22px;
+    color: #189ce4;
+}
+
+.modal{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 40px;
+}
+.modal>div{
+display: flex;
+justify-content: space-between;
+}
+.modal>div>input{
+    height: 40px;
+    width: 360px;
+    border: 2px solid #189ce4;
+    border-radius: 6px;
+    font-size: 16px;
+    padding: 0px 0px 0px 6px;
+}
+.modal>div>textarea{
+    height: 40px;
+    max-width: 360px;
+    min-width: 360px;
+    border: 2px solid #189ce4;
+    border-radius: 6px;
+    font-size: 16px;
+    padding: 0px 0px 0px 6px;
+}
+.modal>div>input:focus{
+    /* border: none; */
+    outline: none;
+}
+.modal>div>textarea:focus{
+    outline: none;
+}
+.modalHeading{
+    text-align: center;
+    font-size: 22px;
+    font-weight: 600;
+    margin: 20px 0px;
+}
+
+.modalButton{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap:10px
+}
+.modalButton>button:nth-child(1){
+    font-size: 16px;
+    font-weight: 500;
+    width: 140px;
+    height: 40px;
+    background-color: #189ce4;
+    border: none;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    outline: none;
+}
+
+.modalButton>button:nth-child(2){
+    font-size: 16px;
+    font-weight: 500;
+    width: 140px;
+    height: 40px;
+    background-color: transparent;
+    border: 2px solid #189ce4;
+    border-radius: 6px;
+    cursor: pointer;
+    outline: none;
+    color: #189ce4;
+}
+.addContainer{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.searchContainer{
+background-color: white;
+}
+.searchContainer>input{
+height: 40px;
+width: 220px;
+border: none;
+outline: none;
+border-radius: 6px;
+}
+.searchContainer>button{
+    height: 40px;
+    width: 100px;
+    background-color: #189ce4;
+    border: none;
+border-radius: 6px;
+color: white;
+font-size: 16px;
+font-weight: 500;
+cursor: pointer;
+outline: none   ;
+}
+.editBar{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom:40px;
+}
+.editOne{
+    display: flex;
+    align-items: center;
+    gap:20px
+}
+.editOne > p{
+    font-size: 17px;
+    font-weight: 500;
+}
+.editTwo{
+    display: flex;
+    gap:10px
+}
+.editTwo > button:nth-child(1){
+    height: 40px;
+    width: 40px;
+    background-color: #189ce4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 6px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+
+}
+.editButton{
+    color: white;
+    font-size: 20px;
+}
+.editTwo > button:nth-child(2){
+    height: 40px;
+    width: 40px;
+    background-color: red;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 6px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+.deleteButton{
+    color: white;
+    font-size: 20px;
+}
+.moadlAdd{
+    display: flex;
+    gap:10px
+}
+.moadlAdd>input{
+    flex-grow: 1;
+    border-radius: 6px;
+    border: 2px solid #189ce4;
+    outline: none;
+    padding-left: 8px;
+}
+.moadlAdd>button{
+    padding: 10px 25px;
+    background-color: #189ce4;
+    outline: none;
+    border: none; 
+    cursor: pointer;
+    border-radius: 6px;
+    color: white;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+
+
+
+
+
+
+
+
+
+
+/* Text Box */
+.checkbox-wrapper-46 input[type="checkbox"] {
+    display: none;
+    visibility: hidden;
+  }
+  
+  .checkbox-wrapper-46 .cbx {
+    margin: auto;
+    -webkit-user-select: none;
+    user-select: none;
+    cursor: pointer;
+  }
+  .checkbox-wrapper-46 .cbx span {
+    display: inline-block;
+    vertical-align: middle;
+    transform: translate3d(0, 0, 0);
+  }
+  .checkbox-wrapper-46 .cbx span:first-child {
+    position: relative;
+    width: 18px;
+    height: 18px;
+    border-radius: 3px;
+    transform: scale(1);
+    vertical-align: middle;
+    border: 1px solid #9098a9;
+    transition: all 0.2s ease;
+  }
+  .checkbox-wrapper-46 .cbx span:first-child svg {
+    position: absolute;
+    top: 3px;
+    left: 2px;
+    fill: none;
+    stroke: #ffffff;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 16px;
+    stroke-dashoffset: 16px;
+    transition: all 0.3s ease;
+    transition-delay: 0.1s;
+    transform: translate3d(0, 0, 0);
+  }
+  .checkbox-wrapper-46 .cbx span:first-child:before {
+    content: "";
+    width: 100%;
+    height: 100%;
+    background: #189ce4;
+    display: block;
+    transform: scale(0);
+    opacity: 1;
+    border-radius: 50%;
+  }
+  .checkbox-wrapper-46 .cbx span:last-child {
+    padding-left: 8px;
+  }
+  .checkbox-wrapper-46 .cbx:hover span:first-child {
+    border-color: #189ce4;
+  }
+  
+  .checkbox-wrapper-46 .inp-cbx:checked + .cbx span:first-child {
+    background: #189ce4;
+    border-color: #189ce4;
+    animation: wave-46 0.4s ease;
+  }
+  .checkbox-wrapper-46 .inp-cbx:checked + .cbx span:first-child svg {
+    stroke-dashoffset: 0;
+  }
+  .checkbox-wrapper-46 .inp-cbx:checked + .cbx span:first-child:before {
+    transform: scale(3.5);
+    opacity: 0;
+    transition: all 0.6s ease;
+  }
+  
+  @keyframes wave-46 {
+    50% {
+      transform: scale(0.9);
+    }
+  }
+  

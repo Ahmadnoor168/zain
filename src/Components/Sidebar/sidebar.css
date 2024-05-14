@@ -1,0 +1,64 @@
+.sidebarContainer {
+    height: 100%;
+    width: 340px;
+    background-color: #189ce4;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    overflow: scroll;
+
+}
+.sidebarContainer::-webkit-scrollbar {
+    width: 0; 
+    display: none; 
+}
+.sidebarSection {
+    padding:  20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 340px;
+    
+    
+}
+
+.nav-link {
+    height: 50px;
+    color: white;
+    border: 2px solid white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap:6;
+    font-size: 18px;
+    font-weight: 500;
+    text-decoration: none;
+    outline: none;
+}
+.sidebarSec{
+    height: 50px;
+    color: white;
+    border: 2px solid white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap:6;
+    font-size: 18px;
+    font-weight: 500;
+    text-decoration: none;
+    outline: none;
+    background-color: white;
+    color:#189ce4;
+}
+.active{
+    background-color: white;
+    color:#189ce4
+}

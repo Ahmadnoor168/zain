@@ -1,0 +1,138 @@
+.billHeader{
+    width: 100%;
+    background-color:#189ce4 ;
+    padding:35px 120px 40px 120px;
+    display: flex;
+    justify-content: space-between;
+}
+.billHeading{
+    color: white;
+    font-size: 32px;
+    font-weight: 600;
+}
+.rightSection>div{
+    display: flex;
+    width: 300px;
+    justify-content: space-between;
+}
+.rightSection>div:nth-child(1){
+    margin-bottom: 10px;
+}
+.rightSection>div>p{
+    color: white;
+    font-size: 16px;
+    font-weight: 500;
+}
+.rightSection>div>p:nth-child(1){
+    margin-right: 40px;
+}
+.billSection{
+    display: flex;
+    justify-content: space-between;
+    padding: 50px 120px;
+}
+.billSection>div:nth-child(1){
+    width: 360px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.billOneText{
+    font-size: 28px;
+    font-weight: 600;
+}
+.billBoxOne{
+    margin-top: 20px;
+    background-color: #e9e5e5;
+    padding: 20px;
+}
+
+.billSection>div:nth-child(2){
+    width: 360px;
+}
+.billDetail{
+    display: flex;
+    justify-content: space-between;
+}
+.billDetail>p{
+    text-align: center;
+    padding: 8px 0;
+    background-color: #c7ebff;
+    border: 2px solid #189ce4;
+
+}
+.billDetail>p:nth-child(1){
+    width: 50%;
+}
+.billDetail>p:nth-child(2){
+    width: 25%;
+}
+.billDetail>p:nth-child(3){
+    width: 25%;
+}
+.table{
+    width: 100%;
+}
+.tableHeading{
+    background-color: #189ce4;
+    text-align: center;
+    color: white;
+    font-size: 18px;
+    font-weight: 500;
+    
+}
+.tableHeading>th{
+    padding: 20px 0px;
+    border: 2px solid #189ce4;
+    width: 16.50%;
+}
+.tableBody>tr>td{
+    text-align: center;
+    padding: 20px 0px;
+
+    background-color: #e9e5e5;
+    font-size: 17px;
+    font-weight: 500;
+}
+.total{
+    color:#189ce4
+}
+.bankDetal{
+    display: flex;
+    margin: 30px;
+}
+.bankDetal>div{
+    width: 360px;
+    border: 1px solid gray;
+}
+.bankDetal>div:nth-child(1){
+    display: flex;
+    flex-direction: column;
+    gap:20px;
+    text-align: center;
+}
+.bankDetal>div:nth-child(1)>p{
+    font-weight: 500;
+}
+.bankDetal>div:nth-child(2){
+text-align: center;
+}
+.bankDetal>div:nth-child(2)>p{
+    font-weight: 500;
+    font-size: 12px;
+    text-align: center;
+    border: 1px solid gray;
+    display: inline;
+}
+
+.billSave{
+    display: block;
+    border: 1px solid #189ce4;
+    margin: auto;
+    margin-top: 40px;
+    margin-bottom: 40PX;
+    padding: 18px 100px;
+    font-size: 22px;
+    font-weight: 600;
+    color: #189ce4;
+}
