@@ -10,7 +10,7 @@ import Paper from '@mui/material/Paper';
 import "./client.css"
 import { FiPlusCircle } from "react-icons/fi";
 import { IoChevronDownCircleOutline } from "react-icons/io5";
-
+import { NavLink } from 'react-router-dom';
 
 
 const Client = () => {  
@@ -29,6 +29,17 @@ const Client = () => {
       name: "June",
     },
   ];
+  const [selectedDate, setSelectedDate] = React.useState('');
+
+  // Function to handle change in date input
+  const handleDateChange = (event) => {
+    // Extracting the month and year from the selected date
+    const selectedMonth = event.target.value.slice(5, 7);
+    const selectedYear = event.target.value.slice(0, 4);
+
+    // Updating the state to show only month and year
+    setSelectedDate(`${selectedYear}-${selectedMonth}`);
+  };
   const handleTextButtonClick = () => {
     alert("Text button clicked!");
   };
@@ -42,7 +53,17 @@ const Client = () => {
             <p> Client Detail</p>
           </div>
 
-<button className='selectButton'>Select a Year <IoChevronDownCircleOutline className='selectIcon' /></button>
+{/* <input type='date' className='selectButton' />
+<button type='date' className='selectButton'>Select a Year <IoChevronDownCircleOutline className='selectIcon' /></button> */}
+<input
+        type="month"
+        id="date"
+        value={selectedDate}
+        onChange={handleDateChange}
+        className='selectButton'
+      />
+
+
 
 
           <TableContainer component={Paper}>
@@ -75,8 +96,9 @@ const Client = () => {
 
                         
                       <TableCell  sx={{display:"flex", justifyContent:"center", gap:"8px"}}>
-                      <button onClick={handleTextButtonClick} className='invoiceBtn' >Create Invoice Note</button>
-                      <button onClick={handleTextButtonClick} className='invoiceBtn'>Send Invoice</button> 
+                      <NavLink  to="/bill" className='invoiceBtn'>Create Invoice Note</NavLink> 
+                      <button onClick={handleTextButtonClick} className='invoiceBtn' >Send Invoice</button>
+
                       </TableCell>
                     </TableRow>
 

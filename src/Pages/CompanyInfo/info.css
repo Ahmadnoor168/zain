@@ -84,4 +84,6 @@
     border-radius: 8px;
     width: 160px;
     height: 40px;
+    cursor: pointer;
+    margin-bottom: 40px;
 }
