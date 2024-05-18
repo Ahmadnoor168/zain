@@ -1,4 +1,3 @@
-import React from 'react'
 import "./bill.css"
 import { IoChevronDown } from "react-icons/io5";
 import { FaPhoneVolume } from "react-icons/fa6";
@@ -15,11 +14,11 @@ const Bill = () => {
 
         <div className='rightSection'>
           <div>
-            <p>Date Of Issue</p>
+            <p>発行日</p>
             <p>11/05/2025</p>
           </div>
           <div>
-            <p>Payment Deadline</p>
+            <p>お支払い期限</p>
             <p>11/05/2025</p>
           </div>
         </div>
@@ -37,8 +36,8 @@ const Bill = () => {
           </div>
 
           <div className='billDetail'>
-            <p>Bill Amount</p>
-            <p>Y</p>
+            <p>御請求金額</p>
+            <p>¥</p>
             <p>18.00</p>
           </div>
         </div>
@@ -46,13 +45,15 @@ const Bill = () => {
           <p className='billOneText'>From: Takoemi</p>
 
           <div className='billBoxOne'>
-            <p>Lorem, ipsum dolor.</p>
-            <p>Lorem ipsum dolor sit amet consectetur.</p>
+            <p>J-wire 株式会社</p>
+            <p>代表取締役内山剛臣
+
+〒432-8031</p>
             <p>102910290-231</p>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic, exercitationem!</p>
+            <p>浜松市中区平田町108 平田ホワイトビル3F</p>
             <p>120-123-123</p>
             <p>Registration</p>
-            <p>number:T098776545423</p>
+            <p>登録番号:T9080401021109</p>
           </div>
         </div>
       </div>
@@ -64,12 +65,12 @@ const Bill = () => {
   <table className='table'>
     <thead>
     <tr className='tableHeading'>
-      <th>Item</th>
-      <th>Indivdual</th>
-      <th>Money Order</th>
-      <th>Amount of Money</th>
-      <th>Sales tax rate</th>
-      <th>Total</th>
+      <th>項目</th>
+      <th>個</th>
+      <th>為替</th>
+      <th>金額</th>
+      <th>消費税率</th>
+      <th>合計</th>
     </tr>
     </thead>
     <tbody className='tableBody'>
@@ -126,7 +127,7 @@ const Bill = () => {
       <td></td>
       <td></td>
       <td></td>
-      <td>subtotal</td>
+      <td>小計</td>
       <td>Y0.00</td>
     </tr>
     <tr>
@@ -134,7 +135,7 @@ const Bill = () => {
       <td></td>
       <td></td>
       <td></td>
-      <td>tax Free Contract</td>
+      <td>非課税対照</td>
       <td></td>
     </tr>
     <tr>
@@ -142,7 +143,7 @@ const Bill = () => {
       <td></td>
       <td></td>
       <td></td>
-      <td>tabable</td>
+      <td>非課税対照</td>
       <td>Y0.00</td>
     </tr>
     <tr>
@@ -150,7 +151,7 @@ const Bill = () => {
       <td></td>
       <td></td>
       <td></td>
-      <td>Consumption tax</td>
+      <td>課税対象:</td>
       <td>Y.00</td>
     </tr>
     <tr>
@@ -158,7 +159,7 @@ const Bill = () => {
       <td></td>
       <td></td>
       <td></td>
-      <td className='total'>Total Amount</td>
+      <td className='total'>合計金額</td>
       <td className='total'>Y18.00</td>
     </tr>
     </tbody>
@@ -167,17 +168,17 @@ const Bill = () => {
 
   <div className='bankDetal'>
     <div>
-      <p>Transfer Destination:</p>
-      <p>Rakutin Bank:</p>
-      <p>Rakutin Bank:</p>
-      <p>Branck Name:</p>
-      <p>Branck Number:</p>
-      <p>Account Type:</p>
-      <p>Account Number:</p>
-      <p>Branch Number:</p>
-      <p>Branch Name:</p>
-      <p>Account Type:</p>
-      <p>Account Number:</p>
+      <p>お振込先:</p>
+      <p>楽天銀行:</p>
+      <p>口座番号</p>
+      <p>支店番号</p>
+      <p>支店名：</p>
+      <p>口座の種類:</p>
+      <p>口座番号:</p>
+      <p>口座番号</p>
+      <p>口座番号:</p>
+      <p>口座番号</p>
+      <p>口座番号:</p>
     </div>
     <div>
       <p>J-wire CO,LTD. <IoChevronDown /> </p>

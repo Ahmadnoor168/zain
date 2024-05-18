@@ -37,18 +37,17 @@
     flex-direction: column;
     gap:30px;
     margin-bottom: 30px;
+    position: relative;
 }
-.companytemplate>div{
-    display: flex;
-    gap:20px
-}
+
 
 .companytemplate>div>label{
     width: clamp(100px, 100%, 360px);
     display: block;
     text-align: left;
-    font-size: 18px;
-    font-weight: 500;
+    font-size: 16px;
+    font-weight: 400;
+    margin-bottom: 4px;
 }
 
 .companytemplate>div>input{
@@ -58,15 +57,65 @@
     outline: none;
     border: 2px solid #189ce4;
     border-radius: 6px;
+    padding-left: 4px;
+}
+.bankingContainer{
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
+  padding: 130px 60px 22px 60px;
+  position: relative;
+
+
+}
+.Bankingtemplate{
+  border-radius: 8px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap:30px;
+  margin-bottom: 30px;
+}
+.Bankingtemplate>div{
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
+  padding: 20px;
+  background-color: #F7F7F7;
+  border-radius: 8px;
+
+}
+.Bankingtemplate>div>div>label{
+  width: clamp(100px, 100%, 360px);
+  display: block;
+  text-align: left;
+  font-size: 16px;
+  font-weight: 400;
+  margin-bottom: 4px;
+  margin-top: 22px;
+}
+
+.Bankingtemplate>div>div>input{
+  width: 100%;
+  height: 40px;
+  border: none;
+  outline: none;
+  border: 2px solid #189ce4;
+  border-radius: 6px;
+  padding-left: 4px;
 }
 .BankingText{
     font-size: 28px;
     font-weight: 500;
     color: #189ce4;
+    background-color: #F7F7F7;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+padding: 30px 20px;
 }
 
 .AddBtn{
-    text-align: center;
+    text-align: center; 
+    margin-top: 30px;
 
 }
 .AddBtn>button{
@@ -87,3 +136,80 @@
     cursor: pointer;
     margin-bottom: 40px;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+.copy {
+    box-sizing: border-box;
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background-color: #ffffff;
+    color: #474747;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    outline: none;
+  }
+  .tooltip {
+    position: absolute;
+    opacity: 0;
+    visibility: hidden;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    font: 12px Menlo, Roboto Mono, monospace;
+    color: rgb(50, 50, 50);
+    background: #f4f3f3;
+    padding: 7px;
+    border-radius: 4px;
+    pointer-events: none;
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+  .copy:hover .tooltip,
+  .copy:focus:not(:focus-visible) .tooltip {
+    opacity: 1;
+    visibility: visible;
+    top: calc((100% + 8px) * -1);
+  }
+  .copy:focus:not(:focus-visible) .tooltip::before {
+    content: attr(data-text-end);
+  }
+  .copy:focus:not(:focus-visible) .clipboard {
+    display: none;
+  }
+  .copy:focus:not(:focus-visible) .checkmark {
+    display: block;
+  }
+  .copy:hover,
+  .copy:focus {
+    background-color: #464646;
+  }
+  .copy:active {
+    outline: 1px solid rgb(141, 141, 141);
+  }
+  .copy:hover svg {
+    color: #8bb9fe;
+  }
+  .clipboard.hidden {
+    display: none;
+  }
+  .checkmark.hidden {
+    display: none;
+  }
+  .copy svg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }

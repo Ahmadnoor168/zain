@@ -1,4 +1,3 @@
-import React from 'react'
 import Sidebar from "../../Components/Sidebar"
 import "./menu.css"
 import Table from '@mui/material/Table';
@@ -8,8 +7,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { FiPlusCircle } from "react-icons/fi";
-import { IoChevronDownCircleOutline } from "react-icons/io5";
+
 
 
 const Menu = () => {
@@ -25,9 +23,7 @@ const Menu = () => {
       menu3: "10%",
     }
   ];
-  const handleTextButtonClick = () => {
-    alert("Text button clicked!");
-  };
+
   return (
     <>
     <Sidebar />
@@ -41,9 +37,10 @@ const Menu = () => {
               <Table sx={{ minWidth: 650 }} aria-label="simple table">
                 <TableHead>
                   <TableRow>
-                    <TableCell align='center'  style={{ width:"25%", fontSize:"22px", fontWeight:600}}>Month</TableCell>
-                    <TableCell align='center'  style={{width:"25%",fontSize:"22px", fontWeight:600}}>Attachment</TableCell>
-                    <TableCell align='center'  style={{idth:"50%",fontSize:"22px", fontWeight:600}}>Action</TableCell>
+                    <TableCell align='center'  style={{ width:"10%", fontSize:"22px", fontWeight:600}}>*</TableCell>
+                    <TableCell align='center'  style={{ width:"20%", fontSize:"22px", fontWeight:600}}>	項目</TableCell>
+                    <TableCell align='center'  style={{width:"20%",fontSize:"22px", fontWeight:600}}>金額</TableCell>
+                    <TableCell align='center'  style={{idth:"50%",fontSize:"22px", fontWeight:600}}>消費税（%）</TableCell>
                   </TableRow>
                 </TableHead>
 
@@ -54,6 +51,9 @@ const Menu = () => {
 
 
                     <TableRow key={index} className='table'>
+                      <TableCell  align='center' component="th" scope="row" >
+                        {index}
+                      </TableCell>
                          <TableCell  align='center' component="th" scope="row">
                         {row.course}
                       </TableCell>

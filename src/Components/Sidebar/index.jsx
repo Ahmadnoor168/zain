@@ -21,9 +21,9 @@ const Sidebar = () => {
           <NavLink to="/companyInfo"  className="nav-link" activeClassName="active">
           Company Information
           </NavLink>
-          <NavLink to="/shipmentDetail"  className="nav-link" activeClassName="active">
+          {/* <NavLink to="/shipmentDetail"  className="nav-link" activeClassName="active">
           Shipment System
-          </NavLink>
+          </NavLink> */}
 
 
           <div className="nav-link">

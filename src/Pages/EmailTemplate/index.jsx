@@ -3,6 +3,8 @@ import "./email.css"
 import Sidebar from '../../Components/Sidebar'
 
 const EmailTemplate = () => {
+  const handleClick = () => console.log("click");
+
   return (
     <>
       <Sidebar />
@@ -11,6 +13,7 @@ const EmailTemplate = () => {
         <div className='detail'>
           <p>Email Template</p>
         </div>
+        <button className='addClint' onClick={handleClick}>Add New Template</button>
 
 
         <div className='emialtemplate'>
