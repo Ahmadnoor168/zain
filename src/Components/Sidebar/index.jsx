@@ -6,10 +6,11 @@ const Sidebar = () => {
     <div className='sidebarContainer'>
     <div className='sidebarSection'>
       <p style={{ height: "60px", display: "flex", justifyContent: "center", alignItems: "center" }}>LOGO</p>
-      <div  className="sidebarSec" >
-        Invoice System
-      </div>
-          <NavLink to="/"  className="nav-link" activeClassName="active">
+
+      <NavLink to="/"  className="nav-link" activeClassName="active">
+      Invoice System
+          </NavLink>
+          <NavLink to="/client"  className="nav-link" activeClassName="active">
           Client
           </NavLink>
           <NavLink to="/menu"  className="nav-link" activeClassName="active">

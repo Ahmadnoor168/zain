@@ -32,7 +32,11 @@ const Home = () => {
   const [open, setOpen] = useState(false);
   const [checked, setChecked] = useState(true);
   const [edit, setEdit] = useState(false);
-
+  const [checkedItems, setCheckedItems] = useState([
+    { id: 1, label: 'Developer', checked: false },
+    { id: 2, label: 'Developer', checked: false },
+    { id: 3, label: 'Developer', checked: false },
+  ]);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const handleCloseModal = () => setEdit(false);
@@ -40,8 +44,12 @@ const Home = () => {
   const handleEditModalClose = () => setEdit(false);
 
 
-  const handleChange = (event) => {
-    setChecked(event.target.checked);
+  const handleChange = (event, id) => {
+    setCheckedItems(prevState => 
+      prevState.map(item => 
+        item.id === id ? { ...item, checked: event.target.checked } : item
+      )
+    );
   };
 
   const handleBackdropClick = (e) => {
@@ -305,42 +313,38 @@ const Home = () => {
 
 
       <Modal
-        open={edit}
-        onClose={handleEditModalClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-        BackdropProps={{ onClick: handleBackdropClick }}
-      >
-        <Box sx={{
-          position: 'absolute',
-          bgcolor: 'background.paper',
-          boxShadow: 24,
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          width: "clamp(300px, 100%, 800px)",
-          overflow: "auto",
-          maxHeight: '90vh',
-          outline: "none",
-          borderRadius: "6px",
-          padding: "10px 20px 40px 20px"
-        }}
-        >
-
-          <p className='modalHeading'>Select Memo</p>
-
-
-          <div style={{ maxWidth: "500px", margin: "auto" }}>
-            <div className='editBar'>
+      open={edit}
+      onClose={handleEditModalClose}
+      aria-labelledby="modal-modal-title"
+      aria-describedby="modal-modal-description"
+      BackdropProps={{ onClick: handleBackdropClick }}
+    >
+      <Box sx={{
+        position: 'absolute',
+        bgcolor: 'background.paper',
+        boxShadow: 24,
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: "clamp(300px, 100%, 800px)",
+        overflow: "auto",
+        maxHeight: '90vh',
+        outline: "none",
+        borderRadius: "6px",
+        padding: "10px 20px 40px 20px"
+      }}>
+        <p className='modalHeading'>Select Memo</p>
+        <div style={{ maxWidth: "500px", margin: "auto" }}>
+          {checkedItems.map((item) => (
+            <div className='editBar' key={item.id}>
               <div className='editOne'>
                 <Checkbox
-                  checked={checked}
-                  onChange={handleChange}
+                  checked={item.checked}
+                  onChange={(event) => handleChange(event, item.id)}
                   inputProps={{ 'aria-label': 'controlled' }}
                 />
-                <p>Developer</p>
+                <p>{item.label}</p>
               </div>
-
               <div className='editTwo'>
                 <button onClick={handleOpen}>
                   <FaEdit className='editButton' />
@@ -350,75 +354,23 @@ const Home = () => {
                 </button>
               </div>
             </div>
-
-        
-            <div className='editBar'>
-              <div className='editOne'>
-                <Checkbox
-                  checked={checked}
-                  onChange={handleChange}
-                  inputProps={{ 'aria-label': 'controlled' }}
-                />
-                <p>Developer</p>
-              </div>
-
-              <div className='editTwo'>
-                <button onClick={handleOpen}>
-                  <FaEdit className='editButton' />
-                </button>
-                <button>
-                  <RiDeleteBin6Line className='deleteButton' />
-                </button>
-              </div>
-            </div>
-            <div className='editBar'>
-              <div className='editOne'>
-                <Checkbox
-                  checked={checked}
-                  onChange={handleChange}
-                  inputProps={{ 'aria-label': 'controlled' }}
-                />
-                <p>Developer</p>
-              </div>
-
-              <div className='editTwo'>
-                <button onClick={handleOpen}>
-                  <FaEdit className='editButton' />
-                </button>
-                <button>
-                  <RiDeleteBin6Line className='deleteButton' />
-                </button>
-              </div>
-            </div>
-
-
-            <p style={{ marginBottom: "20px", fontSize: "18px", fontWeight: "600" }}>Add New Memo</p>
-            <div className='moadlAdd'>
-              <input />
-              <button>Add</button>
-            </div>
-
-
-
-            <div>
-              <div className='modalButton' style={{ marginTop: "30px" }}>
-                <button onClick={handleSave}>
-                  Submit
-                </button>
-                <button onClick={handleCloseModal}>
-                  Close
-                </button>
-              </div>
-            </div>
-
-
-
-
-
-
+          ))}
+          <p style={{ marginBottom: "20px", fontSize: "18px", fontWeight: "600" }}>Add New Memo</p>
+          <div className='moadlAdd'>
+            <input />
+            <button>Add</button>
           </div>
-        </Box>
-      </Modal>
+          <div className='modalButton' style={{ marginTop: "30px" }}>
+            <button onClick={handleSave}>
+              Submit
+            </button>
+            <button onClick={handleCloseModal}>
+              Close
+            </button>
+          </div>
+        </div>
+      </Box>
+    </Modal>
 
 
     </>
