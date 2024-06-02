@@ -1,7 +1,19 @@
-import React from 'react'
 import {NavLink} from "react-router-dom"
 import "./sidebar.css"
+import { useDispatch, useSelector } from 'react-redux'
+import {logoutUser} from "../../Redux/authAction"
+
 const Sidebar = () => {
+const dispatch = useDispatch()
+
+  const handlesignout = () => {
+    dispatch(logoutUser());
+  };
+  const isAuthenticated = useSelector(
+    (state) => state.authReducer.isAuthenticated
+  );
+
+    console.log("isAuthenticated",isAuthenticated)
   return (
     <div className='sidebarContainer'>
     <div className='sidebarSection'>
@@ -27,10 +39,13 @@ const Sidebar = () => {
           </NavLink> */}
 
 
-          <div className="nav-link">
-          Logout
-          </div>
 
+          <button
+                onClick={handlesignout}
+                className="nav-link" style={{background:"transparent", cursor:"pointer"}}
+              >
+                Sign Out
+              </button>
 
 
       </div>

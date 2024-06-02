@@ -36,38 +36,7 @@ const Home = () => {
     { id: 2, label: 'Developer', checked: false },
     { id: 3, label: 'Developer', checked: false },
   ]);
-
-  
-
-  const handleOpen = (clientId, rowData ) => {
-console.log("rowData",rowData)
-
-    if (rowData !== null) {
-      setClientId(rowData.id);
-      setClientName(rowData.clientName);
-      setCompanyName(rowData.companyName);
-      setPersonInCharge(rowData.personInCharge);
-      setAddress(rowData.address);
-      setEmailAddress(rowData.emailAddress);
-      setNotes(rowData.notes);
-    } else {
-      setClientId(null);
-      setClientName('');
-      setCompanyName('');
-      setPersonInCharge('');
-      setAddress('');
-      setEmailAddress('');
-      setNotes('');
-      setImage('');
-    }
-    setOpen(true);
-  };
-  
-
-
-
-
-
+  const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const handleCloseModal = () => setEdit(false);
   const handleEdit = () => setEdit(true);
@@ -75,7 +44,7 @@ console.log("rowData",rowData)
   const [clients, setClients] = useState([]);
   const [memos, setMemos] = useState([]);
   const [selectedMemo, setSelectedMemo] = useState('');
-  const [clientId, setClientId] = useState(null);
+
 
   const isAuthenticated = useSelector((state) => state.authReducer.isAuthenticated);
   const uid = useSelector((state) => state.authReducer.uid);
@@ -118,14 +87,24 @@ console.log("rowData",rowData)
 
 
 
-  const handleSubmit = async () => {
-    if (!clientName || !companyName || !personInCharge || !address || !emailAddress) {
+  const handleSubmit = () => {
+    // Check if any required fields are empty
+    if (!clientName || !companyName || !personInCharge || !address || !emailAddress || !image) {
       alert("Please fill out all required fields.");
       return;
     }
-  
+
+    // Get the selected memo's index
+
+
     let ids = JSON.stringify([selectedMemo]);
+    console.log("ids", typeof ids)
+    console.group("ids", ids)
+
+    // Construct FormData object
     const formData = new FormData();
+
+    // Append form fields to FormData
     formData.append('clientName', clientName);
     formData.append('companyName', companyName);
     formData.append('personInCharge', personInCharge);
@@ -133,42 +112,32 @@ console.log("rowData",rowData)
     formData.append('emailAddress', emailAddress);
     formData.append('notes', notes);
     formData.append('image', image);
+    // formData.append('memoIds', JSON.stringify([selectedMemo]));
     formData.append('memoIds', ids);
-  
-    try {
-      if (clientId) {
-        // Update existing client
-        const response = await axios.put(`http://localhost:5000/api/update-client/${clientId}`, formData, {
-          headers: {
-            Authorization: `Bearer ${jwtToken}`
-          }
-        });
-        alert("Client updated successfully.");
-        setClients(prevClients => prevClients.map(client =>
-          client.id === clientId ? { ...client, clientName, companyName, personInCharge, address, emailAddress, notes } : client
-        ));
-      } else {
-        // Add new client
-        const response = await axios.post('http://localhost:5000/api/add-client', formData, {
-          headers: {
-            Authorization: `Bearer ${jwtToken}`
-          }
-        });
-        alert("Client added successfully.");
-        setClients(prevClients => [...prevClients, response.data]);
+
+    fetch('http://localhost:5000/api/add-client', {
+      method: 'POST',
+      body: formData,
+      headers: {
+        Authorization: `Bearer ${jwtToken}`
       }
-  
-      // Re-fetch the clients list
-      fetchAllClients();
-      handleClose();
-    } catch (error) {
-      console.error('Error:', error);
-      alert("Failed to add/update client. Please try again.");
-    }
+    })
+      .then(response => {
+        console.log("response", response)
+        if (response.ok) {
+          // Data saved successfully
+          alert("Data saved successfully.");
+          handleClose(); // Close the modal after saving
+        } else {
+          // Error handling
+          throw new Error('Failed to save data.');
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert("Failed to save data. Please try again.");
+      });
   };
-  
-  
-  
 
 
 
@@ -185,26 +154,26 @@ console.log("rowData",rowData)
 
 
   useEffect(() => {
-  
+    const fetchAllClients = async () => {
+      try {
+        // Make a GET request to fetch all clients
+        const response = await axios.get('http://localhost:5000/api/get-all-clients', {
+          headers: {
+            Authorization: `Bearer ${jwtToken}`
+          }
+        });
+        setClients(response.data);
+      } catch (error) {
+        console.error('Error:', error);
+        alert("Failed to fetch data. Please try again.");
+      }
+    };
     fetchAllClients();
     return () => {
     };
   }, [jwtToken]);
 
-  const fetchAllClients = async () => {
-    try {
-      // Make a GET request to fetch all clients
-      const response = await axios.get('http://localhost:5000/api/get-all-clients', {
-        headers: {
-          Authorization: `Bearer ${jwtToken}`
-        }
-      });
-      setClients(response.data);
-    } catch (error) {
-      console.error('Error:', error);
-      alert("Failed to fetch data. Please try again.");
-    }
-  };
+
 
 
 
@@ -296,9 +265,9 @@ console.log("rowData",rowData)
       Header: 'Memo',
       accessor: 'memos',
       Cell: ({ value }) => (
-        <p onClick={handleEdit} style={{ cursor: "pointer", background: "#189ce4", borderRadius: "4px", padding: "10px", color: "white", display: "inline-block", textTransform: "none", border: "none" }}>
-          {value && value.length > 0 ? value.map(memo => memo?.project).join(',') : "Select New Memo"}
-          <FaCaretDown style={{ fontSize: "15px", position: "relative", top: "2px", left: "3px" }} />
+        <p onClick={handleEdit} style={{cursor:"pointer", background: "#189ce4",borderRadius:"4px", padding: "10px", color: "white", display: "inline-block", textTransform:"none" , border:"none"}}>
+          {value.length === 0 ? "Select New Memo" : value.map(memo => memo?.project).join(',')}
+          <FaCaretDown style={{ fontSize:"15px",position:"relative", top:"2px",left:"3px"}} />
         </p>
       ),
     },
@@ -306,24 +275,12 @@ console.log("rowData",rowData)
       Header: 'Action',
       Cell: ({ row }) => (
         <div style={{ display: "flex" }}>
-          <button onClick={() => handleOpen(clientId, row.original)} className='iconButton'><FaRegEdit className='icon' /></button>
+          <button onClick={handleOpen} className='iconButton'><FaRegEdit className='icon' /></button>
           <NavLink to="/client" className='actionButton' >Action  </NavLink>
         </div>
       ),
     },
   ], []);
-  
-
-
-
-
-
-
-
-
-
-
-
 
   const {
     getTableProps,
@@ -363,16 +320,7 @@ console.log("rowData",rowData)
 
           <div>
             <div className='addContainer'>
-            <button className='addClint' onClick={() => handleOpen(null, null)}>
-  <HiOutlinePlusCircle className='addIcon' />Add New Client
-</button>
-
-
-
-
-
-
-
+              <button className='addClint' onClick={handleOpen}><HiOutlinePlusCircle className='addIcon' />Add New Client</button>
 
 
               {/* <div className='searchContainer'>
@@ -465,7 +413,7 @@ console.log("rowData",rowData)
           className="modal"
 
         >
-          <p className='modalHeading'>{clientId ? 'Update Client' : 'Add New Client'}</p>
+          <p className='modalHeading'>Add New Client</p>
 
           <div>
             <label>Client Name</label>
@@ -551,7 +499,7 @@ console.log("rowData",rowData)
           <div>
             <div className='modalButton'>
               <button onClick={handleSubmit}>
-               {clientId ? 'Update' : 'Submit'}
+                Submit
               </button>
               <button onClick={handleClose}>
                 Close

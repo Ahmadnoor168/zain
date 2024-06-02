@@ -21,8 +21,9 @@
 .saveButton{
     display: block;
     margin-top: 20px;
+    margin-bottom: 20px;
     margin-left: auto;
-    margin-right: auto;
+    /* margin-right: auto; */
     height: 50px;
     width: 130px;
     background-color: #189ce4;
@@ -34,4 +35,22 @@
     font-weight: 400;
     letter-spacing: 1.2px;
     cursor: pointer;
+}
+.icon{
+    color: white;
+    font-size: 20px;
+}
+.iconButton{
+    height: 35px;
+    width: 35px;
+    background-color: #189ce4;
+    border: none;
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    outline: none;
+
+
 }

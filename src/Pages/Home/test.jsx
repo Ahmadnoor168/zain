@@ -118,13 +118,13 @@ console.log("rowData",rowData)
 
 
 
-  const handleSubmit = async () => {
+  const handleSubmit = () => {
     if (!clientName || !companyName || !personInCharge || !address || !emailAddress) {
       alert("Please fill out all required fields.");
       return;
     }
   
-    let ids = JSON.stringify([selectedMemo]);
+    // Prepare data for submission
     const formData = new FormData();
     formData.append('clientName', clientName);
     formData.append('companyName', companyName);
@@ -133,40 +133,51 @@ console.log("rowData",rowData)
     formData.append('emailAddress', emailAddress);
     formData.append('notes', notes);
     formData.append('image', image);
-    formData.append('memoIds', ids);
   
-    try {
-      if (clientId) {
-        // Update existing client
-        const response = await axios.put(`http://localhost:5000/api/update-client/${clientId}`, formData, {
-          headers: {
-            Authorization: `Bearer ${jwtToken}`
-          }
-        });
+    // Check if it's an update or add operation
+    if (clientId) {
+      // Update existing client
+      axios.put(`http://localhost:5000/api/update-client/${clientId}`, formData, {
+        headers: {
+          Authorization: `Bearer ${jwtToken}`
+        }
+      })
+      .then(response => {
+        console.log("Update successful:", response.data);
         alert("Client updated successfully.");
+        // Update the state immediately after successful update
         setClients(prevClients => prevClients.map(client =>
           client.id === clientId ? { ...client, clientName, companyName, personInCharge, address, emailAddress, notes } : client
         ));
-      } else {
-        // Add new client
-        const response = await axios.post('http://localhost:5000/api/add-client', formData, {
-          headers: {
-            Authorization: `Bearer ${jwtToken}`
-          }
-        });
+        // Additional logic after successful update
+      })
+      .catch(error => {
+        console.error('Update error:', error);
+        alert("Failed to update client. Please try again.");
+      });
+    } else {
+      // Add new client
+      axios.post('http://localhost:5000/api/add-client', formData, {
+        headers: {
+          Authorization: `Bearer ${jwtToken}`
+        }
+      })
+      .then(response => {
+        console.log("Add successful:", response.data);
         alert("Client added successfully.");
+        // Update the state immediately after successful addition
         setClients(prevClients => [...prevClients, response.data]);
-      }
-  
-      // Re-fetch the clients list
-      fetchAllClients();
-      handleClose();
-    } catch (error) {
-      console.error('Error:', error);
-      alert("Failed to add/update client. Please try again.");
+        // Additional logic after successful addition
+      })
+      .catch(error => {
+        console.error('Add error:', error);
+        alert("Failed to add client. Please try again.");
+      });
     }
-  };
   
+    // Clear form fields and close modal
+    handleClose();
+  };
   
   
 
@@ -185,26 +196,26 @@ console.log("rowData",rowData)
 
 
   useEffect(() => {
-  
+    const fetchAllClients = async () => {
+      try {
+        // Make a GET request to fetch all clients
+        const response = await axios.get('http://localhost:5000/api/get-all-clients', {
+          headers: {
+            Authorization: `Bearer ${jwtToken}`
+          }
+        });
+        setClients(response.data);
+      } catch (error) {
+        console.error('Error:', error);
+        alert("Failed to fetch data. Please try again.");
+      }
+    };
     fetchAllClients();
     return () => {
     };
   }, [jwtToken]);
 
-  const fetchAllClients = async () => {
-    try {
-      // Make a GET request to fetch all clients
-      const response = await axios.get('http://localhost:5000/api/get-all-clients', {
-        headers: {
-          Authorization: `Bearer ${jwtToken}`
-        }
-      });
-      setClients(response.data);
-    } catch (error) {
-      console.error('Error:', error);
-      alert("Failed to fetch data. Please try again.");
-    }
-  };
+
 
 
 
@@ -296,9 +307,9 @@ console.log("rowData",rowData)
       Header: 'Memo',
       accessor: 'memos',
       Cell: ({ value }) => (
-        <p onClick={handleEdit} style={{ cursor: "pointer", background: "#189ce4", borderRadius: "4px", padding: "10px", color: "white", display: "inline-block", textTransform: "none", border: "none" }}>
-          {value && value.length > 0 ? value.map(memo => memo?.project).join(',') : "Select New Memo"}
-          <FaCaretDown style={{ fontSize: "15px", position: "relative", top: "2px", left: "3px" }} />
+        <p onClick={handleEdit} style={{cursor:"pointer", background: "#189ce4",borderRadius:"4px", padding: "10px", color: "white", display: "inline-block", textTransform:"none" , border:"none"}}>
+          {value.length === 0 ? "Select New Memo" : value.map(memo => memo?.project).join(',')}
+          <FaCaretDown style={{ fontSize:"15px",position:"relative", top:"2px",left:"3px"}} />
         </p>
       ),
     },
@@ -306,24 +317,12 @@ console.log("rowData",rowData)
       Header: 'Action',
       Cell: ({ row }) => (
         <div style={{ display: "flex" }}>
-          <button onClick={() => handleOpen(clientId, row.original)} className='iconButton'><FaRegEdit className='icon' /></button>
+<button onClick={() => handleOpen(clientId, row.original)} className='iconButton'><FaRegEdit className='icon' /></button>
           <NavLink to="/client" className='actionButton' >Action  </NavLink>
         </div>
       ),
     },
   ], []);
-  
-
-
-
-
-
-
-
-
-
-
-
 
   const {
     getTableProps,
