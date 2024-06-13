@@ -1,4 +1,4 @@
-import { LOGIN ,LOGOUT} from "./actionTypes"
+import { LOGIN ,LOGOUT, LANG} from "./actionTypes"
 
 // ,  ,LANG}
 
@@ -19,9 +19,9 @@ export const logoutUser = () => {
   };
 };
 
-// export const language = ( lang ) => {
-//   return {
-//     type: LANG,
-//     payload: { lang },
-//   };
-// };
+export const language = ( lang ) => {
+  return {
+    type: LANG,
+    payload: { lang },
+  };
+};

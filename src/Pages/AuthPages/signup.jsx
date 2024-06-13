@@ -87,7 +87,7 @@ const Signin = () => {
         password: password
       };
 
-      axios.post('http://localhost:5000/api/register', userData)
+      axios.post('https://invoice-system-gqb8a.ondigitalocean.app/api/register', userData)
         .then(response => {
           setSnackbarMessage(response.data.message);
           setSnackbarOpen(true);

@@ -115,7 +115,7 @@ const Home = () => {
     // formData.append('memoIds', JSON.stringify([selectedMemo]));
     formData.append('memoIds', ids);
 
-    fetch('http://localhost:5000/api/add-client', {
+    fetch('https://invoice-system-gqb8a.ondigitalocean.app/api/add-client', {
       method: 'POST',
       body: formData,
       headers: {
@@ -157,7 +157,7 @@ const Home = () => {
     const fetchAllClients = async () => {
       try {
         // Make a GET request to fetch all clients
-        const response = await axios.get('http://localhost:5000/api/get-all-clients', {
+        const response = await axios.get('https://invoice-system-gqb8a.ondigitalocean.app/api/get-all-clients', {
           headers: {
             Authorization: `Bearer ${jwtToken}`
           }
@@ -224,7 +224,7 @@ const Home = () => {
 
   const fetchMemos = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/get-all-memos', {
+      const response = await axios.get('https://invoice-system-gqb8a.ondigitalocean.app/api/get-all-memos', {
         headers: {
           'Authorization': `Bearer ${jwtToken}`,
         },

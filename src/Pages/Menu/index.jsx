@@ -15,6 +15,10 @@ import TextField from '@mui/material/TextField';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import { FaRegEdit } from "react-icons/fa";
+import { Snackbar, Alert } from '@mui/material';
+import { RiDeleteBin6Line } from "react-icons/ri";
+import { useTranslation } from 'react-i18next';
+
 
 const Menu = () => {
   const [open, setOpen] = useState(false);
@@ -25,6 +29,11 @@ const Menu = () => {
   const [saleTax, setSaleTax] = useState('');
   const [memos, setMemos] = useState([]);
   const jwtToken = useSelector((state) => state.authReducer.jwtToken);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('');
+  const [snackbarSeverity, setSnackbarSeverity] = useState('success');
+  const {t, i18n }=useTranslation()
+
 
   useEffect(() => {
     fetchMemos();
@@ -32,7 +41,7 @@ const Menu = () => {
 
   const fetchMemos = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/get-all-memos', {
+      const response = await axios.get('https://invoice-system-gqb8a.ondigitalocean.app/api/get-all-memos', {
         headers: {
           'Authorization': `Bearer ${jwtToken}`,
         },
@@ -71,13 +80,13 @@ const Menu = () => {
     try {
       let response;
       if (isEditing) {
-        response = await axios.put(`http://localhost:5000/api/update-memo/${currentMemoId}`, newMemo, {
+        response = await axios.put(`https://invoice-system-gqb8a.ondigitalocean.app/api/update-memo/${currentMemoId}`, newMemo, {
           headers: {
             'Authorization': `Bearer ${jwtToken}`,
           },
         });
       } else {
-        response = await axios.post('http://localhost:5000/api/add-memo', newMemo, {
+        response = await axios.post('https://invoice-system-gqb8a.ondigitalocean.app/api/add-memo', newMemo, {
           headers: {
             'Authorization': `Bearer ${jwtToken}`,
           },
@@ -85,15 +94,29 @@ const Menu = () => {
       }
 
       if (response.status === 200 || response.status === 201) {
-        console.log('Memo saved successfully');
+        setSnackbarMessage('Memo saved successfully');
+        setSnackbarSeverity('success');
         handleClose();
         fetchMemos(); // Refresh the memo list
       } else {
+        setSnackbarMessage('Failed to save memo');
+        setSnackbarSeverity('error');
         console.error('Failed to save memo', response);
       }
     } catch (error) {
+      setSnackbarMessage('Error saving memo');
+      setSnackbarSeverity('error');
       console.error('Error:', error);
+    } finally {
+      setSnackbarOpen(true);
     }
+  };
+
+  const handleCloseSnackbar = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setSnackbarOpen(false);
   };
 
   const handleOpenUpdate = (memo) => {
@@ -104,6 +127,37 @@ const Menu = () => {
     setSaleTax(memo.salesTax);
     setOpen(true);
   };
+
+
+  const deleteMemo = async (row) => {
+    console.log("row-=", row.id);
+    try {
+      const response = await axios.delete(`https://invoice-system-gqb8a.ondigitalocean.app/api/delete-memo/${row.id}`, {
+        headers: {
+          Authorization: `Bearer ${jwtToken}`
+        }
+      });
+
+      if (response.status === 200) {
+        console.log("Memo deleted successfully.");
+        setSnackbarMessage('Memo deleted successfully');
+        setSnackbarSeverity('success');
+        fetchMemos();
+      } else {
+        setSnackbarMessage('Failed to delete memo');
+        setSnackbarSeverity('error');
+        console.error('Error:', response.data);
+      }
+    } catch (error) {
+      setSnackbarMessage('Error deleting memo');
+      setSnackbarSeverity('error');
+      console.error('Error:', error);
+    } finally {
+      setSnackbarOpen(true);
+    }
+  };
+
+
 
   const style = {
     position: 'absolute',
@@ -122,36 +176,41 @@ const Menu = () => {
 
       <div className='menuConainer'>
         <div className='detail'>
-          <p> Menu Detail</p>
+          <p>{t('MenuHead')}</p>
         </div>
-        <button className='saveButton' onClick={handleOpen}>Add Memo</button>
+        <button className='saveButton' onClick={handleOpen}>{t('MenuBtn')}</button>
 
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
               <TableRow>
-                <TableCell align='center' style={{ width:"10%", fontSize:"22px", fontWeight:600}}>*</TableCell>
-                <TableCell align='center' style={{ width:"20%", fontSize:"22px", fontWeight:600}}>項目</TableCell>
-                <TableCell align='center' style={{width:"20%",fontSize:"22px", fontWeight:600}}>金額</TableCell>
-                <TableCell align='center' style={{width:"50%",fontSize:"22px", fontWeight:600}}>消費税（%）</TableCell>
-                <TableCell align='center' style={{width:"50%",fontSize:"22px", fontWeight:600}}>Action</TableCell>
+                <TableCell align='center' style={{ width:"10%", fontSize:"18px", fontWeight:600}}>{t('MenuOne')}</TableCell>
+                <TableCell align='center' style={{ width:"20%", fontSize:"18px", fontWeight:600}}>{t('MenuTwo')}</TableCell>
+                <TableCell align='center' style={{width:"20%",fontSize:"18px", fontWeight:600}}>{t('MenuThree')}                </TableCell>
+                <TableCell align='center' style={{width:"50%",fontSize:"18px", fontWeight:600}}>{t('MenuFour')}</TableCell>
+                <TableCell align='center' style={{width:"50%",fontSize:"18px", fontWeight:600}}>{t('MenuFive')}</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {memos.map((row, index) => (
                 <TableRow key={index} className='table'>
                   <TableCell align='center' component="th" scope="row">
-                    {index}
+                    {index+1}
                   </TableCell>
                   <TableCell align='center' component="th" scope="row">
                     {row.project}
                   </TableCell>
                   <TableCell align='center'>{row.amountOfMoney}$</TableCell>
                   <TableCell  align='center'>{row.salesTax}%</TableCell>
-                  <TableCell align='center'>
+                  <TableCell align='center' style={{display:'flex', gap:"10px"}}>
                     <button onClick={() => handleOpenUpdate(row)} className='iconButton'>
                       <FaRegEdit className='icon' />
                     </button>
+                    <div className='deleteBtn'>
+                    <button onClick={() => deleteMemo(row)}>
+                        <RiDeleteBin6Line className='deleteButton' />
+                      </button>
+                      </div>
                   </TableCell>
                 </TableRow>
               ))}
@@ -207,6 +266,13 @@ const Menu = () => {
           </Box>
         </Modal>
       </div>
+
+
+      <Snackbar open={snackbarOpen} autoHideDuration={6000} onClose={handleCloseSnackbar}>
+        <Alert onClose={handleCloseSnackbar} severity={snackbarSeverity}>
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
     </>
   );
 };

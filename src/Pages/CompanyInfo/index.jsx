@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState,useEffect } from 'react'
 import "./info.css"
 import Sidebar from "../../Components/Sidebar"
 import { AiOutlinePlusCircle } from "react-icons/ai";
@@ -7,6 +7,8 @@ import { useSelector } from 'react-redux';
 
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
+import { Hidden } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
 const CompanyInfo = () => {
 
@@ -14,7 +16,7 @@ const CompanyInfo = () => {
   const [address, setAddress] = useState('');
   const [emailAddress, setEmailAddress] = useState('');
   const jwtToken = useSelector((state) => state.authReducer.jwtToken);
-
+  const {t, i18n }=useTranslation()
 
   const [transferDestination, setTransferDestination] = useState('');
   const [name, setName] = useState('');
@@ -25,6 +27,7 @@ const CompanyInfo = () => {
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
   const [snackbarSeverity, setSnackbarSeverity] = useState('success');
+  const [companyDetails, setCompanyDetails] = useState([]);
 
 
   const handleSave = async () => {
@@ -44,7 +47,7 @@ const CompanyInfo = () => {
     };
 
     try {
-      const response = await axios.post('http://localhost:5000/api/add-company', data, {
+      const response = await axios.post('https://invoice-system-gqb8a.ondigitalocean.app/api/add-company', data, {
         headers: {
           Authorization: `Bearer ${jwtToken}`
         }
@@ -56,6 +59,9 @@ const CompanyInfo = () => {
         setAddress('');
         setEmailAddress('');
         setSnackbarMessage('Company Information saved successfully!');
+        setSnackbarSeverity('success');
+        setOpenSnackbar(true);
+        fetchCompanyDetails()
       } else {
         alert('Failed to save company data. Please try again.');
       }
@@ -89,7 +95,7 @@ const CompanyInfo = () => {
     };
 
     try {
-        const response = await axios.post('http://localhost:5000/api/add-banking-detail', data, {
+        const response = await axios.post('https://invoice-system-gqb8a.ondigitalocean.app/api/add-banking-detail', data, {
             headers: {
                 Authorization: `Bearer ${jwtToken}`
             }
@@ -100,7 +106,6 @@ const CompanyInfo = () => {
             console.log("response.status",response.status)
             setSnackbarSeverity('success');
             setOpenSnackbar(true);
-            // Optionally, clear the form fields
             setTransferDestination('');
             setName('');
             setBranchNumber('');
@@ -123,6 +128,32 @@ const CompanyInfo = () => {
 const handleSnackbarClose = () => {
     setOpenSnackbar(false);
 };
+
+
+
+
+useEffect(()=>{
+  fetchCompanyDetails()
+},[])
+const fetchCompanyDetails = async () => {
+  try {
+    const response = await axios.get('https://invoice-system-gqb8a.ondigitalocean.app/api/get-all-companies', {
+      headers: {
+        Authorization: `Bearer ${jwtToken}`
+      }
+    });
+    setCompanyDetails(response.data);
+    console.log("response", response.data);
+  } catch (error) {
+    console.error('Error fetching banking details:', error);
+  }
+};
+
+console.log("companyDetails",companyDetails.length)
+
+
+
+
   return (
     <>
       <Sidebar />
@@ -130,25 +161,25 @@ const handleSnackbarClose = () => {
 
       <div className='companyContainers'>
         <div className='detail'>
-          <p>Company Information</p>
+          <p>{t('CDHead')}</p>
         </div>
         <div className='companytemplate'>
           <div>
-            <label>Company Name:</label>
+            <label>{t('CDCOne')}:</label>
             <input value={companyName} onChange={(e) => setCompanyName(e.target.value)} />
           </div>
           <div>
-            <label>Address:</label>
+            <label>{t('CDCTwo')}:</label>
             <input value={address} onChange={(e) => setAddress(e.target.value)} />
           </div>
           <div>
-            <label>Email Address:</label>
+            <label>{t('CDCThree')}:</label>
             <input value={emailAddress} onChange={(e) => setEmailAddress(e.target.value)} />
           </div>
 
         </div>
         <div className='AddBtn'>
-          <button onClick={handleSave} >Save</button>
+          {companyDetails.length >= 1 ? <button onClick={handleSave} style={{background:"#e0e0e0", color:"black"}} disabled >{t('CNBtnTwo')}</button> : <button  onClick={handleSave} >{t('CNBtnTwo')}</button>}
         </div>
 
 
@@ -167,31 +198,32 @@ const handleSnackbarClose = () => {
           <div className='Bankingtemplate '  >
 
 
-            <p className='BankingText'>Banking Detail</p>
+            <p className='BankingText'>{t('CDBDesc')}</p>
 
             <div>
                 <div>
-                    <label>お振込先:</label>
+                    <label>{t('CDBOne')}:</label>
                     <input value={transferDestination} onChange={(e) => setTransferDestination(e.target.value)} />
                 </div>
                 <div>
-                    <label>名義:</label>
+                    <label>{t('CDBtwo')}:</label>
                     <input value={name} onChange={(e) => setName(e.target.value)} />
                 </div>
                 <div>
-                    <label>支店番号:</label>
+                    <label>{t('CDBThree')}:</label>
                     <input value={branchNumber} onChange={(e) => setBranchNumber(e.target.value)} />
                 </div>
                 <div>
-                    <label>支店名:</label>
+                    <label>
+                    {t('CDBFour')}:</label>
                     <input value={branchName} onChange={(e) => setBranchName(e.target.value)} />
                 </div>
                 <div>
-                    <label>口座の種類:</label>
+                    <label>{t('CDBFive')}                  :</label>
                     <input value={accountType} onChange={(e) => setAccountType(e.target.value)} />
                 </div>
                 <div>
-                    <label>口座番号:</label>
+                    <label>{t('CDBSix')}                :</label>
                     <input value={accountNumber} onChange={(e) => setAccountNumber(e.target.value)} />
                 </div>
             </div>
@@ -199,7 +231,7 @@ const handleSnackbarClose = () => {
             
             <div className='AddBtn' onClick={handleSaveBankDetail}>
                 <button>
-                    <AiOutlinePlusCircle style={{ fontSize: "20px", fontWeight: "900" }} /> Save
+                {t('CNBtnTwo')}
                 </button>
             </div>
             </div>
@@ -213,11 +245,11 @@ const handleSnackbarClose = () => {
         <div className='companytemplate'>
 
           <div>
-            <label>Tax Registration No. :</label>
+            <label>{t('CDTOne')}:</label>
             <input />
           </div>
           <div>
-            <label>Upload Image :</label>
+            <label>{t('CDTTwo')}:</label>
             <input type='file' />
           </div>
 
@@ -225,7 +257,7 @@ const handleSnackbarClose = () => {
         </div>
 
         <div className='AddBtn'>
-          <button>Update</button>
+          <button>{t('CDTBtn')}</button>
         </div>
 
       </div>

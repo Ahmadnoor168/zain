@@ -54,3 +54,20 @@
 
 
 }
+
+.deleteBtn > button:nth-child(1){
+    height: 35px;
+    width: 35px;
+    background-color: red;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 6px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+.deleteButton{
+    color: white;
+    font-size: 20px;
+}

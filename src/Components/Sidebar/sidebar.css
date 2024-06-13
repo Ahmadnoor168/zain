@@ -18,10 +18,13 @@
     flex-direction: column;
     gap: 20px;
     width: 340px;
-    
-    
 }
-
+.dropdown{
+    display: flex;
+    flex-direction: column;
+    gap:10px;
+    margin-left: 15px;
+}
 .nav-link {
     height: 50px;
     color: white;

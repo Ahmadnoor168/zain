@@ -13,7 +13,6 @@ import SignIn from './Pages/AuthPages/signIn';
 import Signup from './Pages/AuthPages/signup';
 import ErrorMessage from "./ErrorMessage";
 import Layout from "./Pages/Layout";
-
 // Router for unauthenticated users
 const routerAuth = createBrowserRouter([
   {
@@ -45,7 +44,7 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "client",
+        path: "client/:id",
         element: <Client />,
       },
       {
@@ -65,7 +64,7 @@ const router = createBrowserRouter([
         element: <ShipmentDetail />,
       },
       {
-        path: "bill",
+        path: "createInvoice/:id",
         element: <Bill />,
       },
     ],

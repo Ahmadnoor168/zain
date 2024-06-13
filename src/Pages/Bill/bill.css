@@ -41,11 +41,7 @@
     font-size: 28px;
     font-weight: 600;
 }
-.billBoxOne{
-    margin-top: 20px;
-    background-color: #e9e5e5;
-    padding: 20px;
-}
+
 
 .billSection>div:nth-child(2){
     width: 360px;
@@ -53,16 +49,19 @@
 .billDetail{
     display: flex;
     justify-content: space-between;
+    margin-top: 20px;
+
 }
 .billDetail>p{
     text-align: center;
     padding: 8px 0;
     background-color: #c7ebff;
-    border: 2px solid #189ce4;
+    border: 1px solid #189ce4;
 
 }
 .billDetail>p:nth-child(1){
     width: 50%;
+
 }
 .billDetail>p:nth-child(2){
     width: 25%;
@@ -72,6 +71,7 @@
 }
 .table{
     width: 100%;
+    border-collapse: collapse;
 }
 .tableHeading{
     background-color: #189ce4;
@@ -86,13 +86,14 @@
     border: 2px solid #189ce4;
     width: 16.50%;
 }
+
 .tableBody>tr>td{
     text-align: center;
-    padding: 20px 0px;
-
-    background-color: #e9e5e5;
+    padding: 2px 0px;
+    background-color: white;
     font-size: 17px;
     font-weight: 500;
+    border: 3px solid #189ce4;
 }
 .total{
     color:#189ce4
@@ -214,4 +215,67 @@ text-align: center;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+  }
+
+  input{
+    height: 35px;
+    width: 100%;
+    border: none;
+    outline: none;
+    background-color: white;
+  }
+  .tableBody{
+    background-color: #189ce4;
+   
+  }
+  .clintTable{
+    border-spacing: 5px;
+    width: clamp(450px, 100%, 450px ) ;
+    border: 1px solid #189ce4;
+    border-collapse: collapse;
+  }
+  .clintTable>tr>td{
+    border: 1px solid #d5dde0;
+    padding: 8px;
+  }
+  .clintTable>tr>td:nth-child(1){
+    font-weight: 700;
+  }
+  .btn{
+    background-color: #189ce4;
+    border: none;
+    outline: none;
+    color: white;
+    font-size: 16px;
+    padding: 10px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  .bankingMainTable{
+    margin: 20px;
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .bankContainer{
+    margin-left: 40px;
+    margin-bottom: 60px;
+  }
+
+  .bankTable>tr>td{
+    border: 1px solid #d5dde0;
+  }
+  .bankTable>tr>td:nth-child(1){
+    font-weight: 700;
+    padding: 8px;
+   
+
+  }
+  .bankTable>tr>td:nth-child(2){
+    padding: 8px;
+   min-width: 160px;
+
+  }
+  .bankTablemain{
+    border-collapse: collapse;
+    margin-top: 20px;
   }

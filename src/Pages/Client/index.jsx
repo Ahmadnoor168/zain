@@ -10,9 +10,18 @@ import Paper from '@mui/material/Paper';
 import "./client.css"
 import { FiPlusCircle } from "react-icons/fi";
 import { NavLink } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+
 
 
 const Client = () => {  
+
+  const {t, i18n }=useTranslation()
+
+
+
+
   let clintData = [
     {
       name: "January",
@@ -29,7 +38,7 @@ const Client = () => {
     },
   ];
   const [selectedDate, setSelectedDate] = React.useState('');
-
+  const { id } = useParams();
   // Function to handle change in date input
   const handleDateChange = (event) => {
     // Extracting the month and year from the selected date
@@ -76,8 +85,12 @@ const Client = () => {
 
 
   <div className='clientContainer'>
+
+
+
+  
   <div className='detail'>
-            <p> Client Detail</p>
+            <p>{t('cliDet')}</p>
           </div>
 
 <input
@@ -95,9 +108,9 @@ const Client = () => {
               <Table sx={{ minWidth: 650 }} aria-label="simple table">
                 <TableHead>
                   <TableRow>
-                    <TableCell align='center'  style={{ width:"25%", fontSize:"22px", fontWeight:600}}>Month</TableCell>
-                    <TableCell align='center'  style={{width:"25%",fontSize:"22px", fontWeight:600}}>Attachment</TableCell>
-                    <TableCell align='center'  style={{idth:"50%",fontSize:"22px", fontWeight:600}}>Action</TableCell>
+                    <TableCell align='center'  style={{ width:"25%", fontSize:"22px", fontWeight:600}}>{t('cliOne')}</TableCell>
+                    <TableCell align='center'  style={{width:"25%",fontSize:"22px", fontWeight:600}}>{t('cliTwo')}</TableCell>
+                    <TableCell align='center'  style={{idth:"50%",fontSize:"22px", fontWeight:600}}>{t('cliThree')}</TableCell>
                   </TableRow>
                 </TableHead>
 
@@ -130,7 +143,7 @@ const Client = () => {
 
                         
                       <TableCell  sx={{display:"flex", justifyContent:"center", gap:"8px"}}>
-                      <NavLink  to="/bill" className='invoiceBtn'>Create Invoice Note</NavLink> 
+                      <NavLink to={`/createInvoice/${id}`}  className='invoiceBtn'>Create Invoice Note</NavLink> 
                       <button onClick={handleTextButtonClick} className='invoiceBtn'>
         Send Invoice
       </button>
