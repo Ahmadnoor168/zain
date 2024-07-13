@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, useCallback,useRef  } from 'react';
+import { useState, useEffect, useMemo, useCallback, useRef } from 'react';
 import { FaRegEdit } from "react-icons/fa";
 import { HiOutlinePlusCircle } from "react-icons/hi";
 import Box from '@mui/material/Box';
@@ -12,34 +12,28 @@ import { NavLink } from 'react-router-dom';
 import { useSelector } from "react-redux";
 import { FaCaretDown } from "react-icons/fa";
 import { useTable, useGlobalFilter, useSortBy, usePagination } from 'react-table';
-import { TableContainer, Table, TableHead, TableBody, TableRow, TableCell, Paper, Input } from '@mui/material';
+import { TableContainer, Table, TableHead, TableBody, TableRow, TableCell, Paper } from '@mui/material';
 import { FaRegSave } from "react-icons/fa";
 import { MdOutlineCancelPresentation } from "react-icons/md";
 import { Snackbar, Alert } from '@mui/material';
 import axios from 'axios';
 import "./styles.css";
-import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
-import {  TextField, Autocomplete } from '@mui/material';
+import { TextField, Autocomplete } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { language } from '../../Redux/authAction';
 import { useDispatch } from 'react-redux';
 
 
-const debounce = (func, delay) => {
-  let timeoutId;
-  return (...args) => {
-    clearTimeout(timeoutId);
-    timeoutId = setTimeout(() => {
-      func(...args);
-    }, delay);
-  };
-};
+
 
 
 
 const Home = () => {
+  const dispatch = useDispatch()
+  const { t, i18n } = useTranslation()
+
   const [clientName, setClientName] = useState('');
   const [companyName, setCompanyName] = useState('');
   const [personInCharge, setPersonInCharge] = useState('');
@@ -58,41 +52,42 @@ const Home = () => {
   const [clientId, setClientId] = useState(null);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
-  const [snackbarSeverity, setSnackbarSeverity] = useState('success'); 
+  const [snackbarSeverity, setSnackbarSeverity] = useState('success');
   const [searchQuery, setSearchQuery] = useState('');
   const [searchdata, setSearchdata] = useState('clientName');
   const jwtToken = useSelector((state) => state.authReducer.jwtToken);
   const lang = useSelector((state) => state.authReducer.lang);
-
-
-  console.log("lang", lang)
-  const [query, setQuery] = useState([]); // Add this line
+  const [query, setQuery] = useState([]); 
   const [searchType, setSearchType] = useState({ value: "clientName", label: 'client' },);
-  const [selectedFilter, setFilter] = useState(null);
   const [loading, setLoading] = useState(false);
-const dispatch = useDispatch()
 
-  const {t, i18n }=useTranslation()
-
-
-
-  const changeLanguage = (lng) => {
-    console.log("lng",lng)
-    i18n.changeLanguage(lng);
-    dispatch(language(lng));
-  };
-
-
-
-const navigation = useNavigate()
-
-
-  const autocompleteRef = useRef(null);
+  
   const handleClose = () => setOpen(false);
   const handleCloseModal = () => setEdit(false);
   const handleEditModalClose = () => setEdit(false);
+
+
+
+
+
+
+
+
+
+
+  // const changeLanguage = (lng) => {
+  //   i18n.changeLanguage(lng);
+  //   dispatch(language(lng));
+  // };
+
+
+
+  const navigation = useNavigate()
+
+
+
   const handleBackdropClick = (e) => {
-    if (e.target === e.currentTarget) {}
+    if (e.target === e.currentTarget) { }
   };
   const cancelSave = () => {
     setEditingMemoId(null);
@@ -104,10 +99,9 @@ const navigation = useNavigate()
   const handleChange = (event, value) => {
     setSearchType(value); // Update searchType with the selected value
   };
-  
 
 
-  console.log("filter", searchType)
+
 
 
 
@@ -116,12 +110,12 @@ const navigation = useNavigate()
     setSnackbarOpen(false);
   };
 
-  
 
 
 
 
- 
+
+
 
 
 
@@ -171,7 +165,7 @@ const navigation = useNavigate()
   };
 
 
-   const handleSubmit = async () => {
+  const handleSubmit = async () => {
     if (!clientId) { // Adding a new client
       if (!clientName || !companyName || !personInCharge || !address || !emailAddress || !image || !selectedMemo) {
         setSnackbarMessage("Please fill out all required fields.");
@@ -228,7 +222,7 @@ const navigation = useNavigate()
     } catch (error) {
 
 
-      
+
       setSnackbarMessage("Failed to update client. Please try again.");
       setSnackbarSeverity('error');
       console.error('Error:', error);
@@ -236,7 +230,7 @@ const navigation = useNavigate()
       setSnackbarOpen(true);
     }
   };
- const addClient = async (formData) => {
+  const addClient = async (formData) => {
     try {
       const response = await axios.post('https://invoice-system-gqb8a.ondigitalocean.app/api/add-client', formData, {
         headers: {
@@ -264,7 +258,7 @@ const navigation = useNavigate()
           Authorization: `Bearer ${jwtToken}`
         }
       });
-  
+
       if (response.status === 200) {
         setSelectedMemos(prevMemos => prevMemos.filter(memo => memo.id !== memoId));
         fetchMemos()
@@ -306,7 +300,7 @@ const navigation = useNavigate()
       setSnackbarMessage('Memo updated successfully');
       setSnackbarSeverity('success');
       setSnackbarOpen(true);
-        } catch (error) {
+    } catch (error) {
       console.error('Error:', error);
       alert("Failed to update memo. Please try again.");
     }
@@ -332,8 +326,8 @@ const navigation = useNavigate()
 
 
   // 45564564
-  
-  
+
+
   const tb1Header = useMemo(() => t('tb1'), [t]);
   const tb2Header = useMemo(() => t('tb2'), [t]);
   const tb3Header = useMemo(() => t('tb3'), [t]);
@@ -389,7 +383,7 @@ const navigation = useNavigate()
       Cell: ({ row }) => (
         <div style={{ display: "flex" }}>
           <button onClick={() => handleOpen(row.original)} className='iconButton'><FaRegEdit className='icon' /></button>
-          <NavLink to={`/client/${row.original.id}`}  className='actionButton' >Action  </NavLink>
+          <NavLink to={`/client/${row.original.id}`} className='actionButton' >Action  </NavLink>
         </div>
       ),
     },
@@ -413,8 +407,7 @@ const navigation = useNavigate()
     usePagination
   );
   const handleMemoSearch = async (searchQuery) => {
-    console.log("searchQuery",searchQuery, searchType.label, searchType.value)
-    
+
     try {
       const response = await axios.get(`https://invoice-system-gqb8a.ondigitalocean.app/api/search?searchType=${searchType.label}&${searchType.value}=${searchQuery}`, {
         headers: {
@@ -433,7 +426,6 @@ const navigation = useNavigate()
       console.error('Error:', error);
     }
   };
-  // const debouncedMemoSearch = useCallback(debounce(handleMemoSearch, 300), []);
 
   const fetchAllClients = async () => {
     try {
@@ -442,7 +434,6 @@ const navigation = useNavigate()
           Authorization: `Bearer ${jwtToken}`
         }
       });
-        console.log("response.dataresponse.data",response.data)
       setClients(response.data);
     } catch (error) {
       console.error('Error:', error);
@@ -455,65 +446,50 @@ const navigation = useNavigate()
   };
   useEffect(() => {
     if (query) {
-      // debouncedMemoSearch(query);
       handleMemoSearch(query)
     }
-  }, [query, searchQuery,searchType.label,searchType.value]);
-  
+  }, [query, searchQuery, searchType.label, searchType.value]);
 
 
-  // const handleAutocompleteChange = (event, newValue) => {
-  //   console.log('Selected value:', newValue,clients);
-  //   setSearchQuery(newValue);
-  // };
 
   const handleAutocompleteChange = (event, newValue) => {
-    console.log('Selected value:', newValue);
 
-    if(searchType.value === "clientName" && searchType.label === "client"){
+    if (searchType.value === "clientName" && searchType.label === "client") {
       const selectedClient = clients.find(client => client.clientName === newValue);
       if (selectedClient) {
-        console.log('Selected client details:', selectedClient?.id);
         navigation(`client/${selectedClient?.id}`)
       } else {
         alert("cannot assign memo to any one")
         console.log('No matching client found');
       }
       setSearchQuery(newValue);
-    }else{
+    } else {
 
-console.log("memo Logic")
+      console.log("memo Logic")
 
-let foundClient = null;
+      let foundClient = null;
 
-// Iterate through each client
-for (let client of clients) {
-  // Check if client.memos is an array and not empty
-  if (Array.isArray(client.memos) && client.memos.length > 0) {
-    // Iterate through each memo in the client's memos array
-    for (let memo of client.memos) {
-      // Check if the memo has a project key and if its value matches newValue
-      if (memo.project === newValue) {
-        foundClient = client;
-        break;
+      for (let client of clients) {
+        if (Array.isArray(client.memos) && client.memos.length > 0) {
+          for (let memo of client.memos) {
+            if (memo.project === newValue) {
+              foundClient = client;
+              break;
+            }
+          }
+        }
+        if (foundClient) {
+          break;
+        }
       }
-    }
-  }
-  // Break outer loop if a match is found
-  if (foundClient) {
-    break;
-  }
-}
 
-// Log the found client's ID or a message if no match is found
-if (foundClient) {
-  console.log('Selected client ID:', foundClient.id);
-  navigation(`client/${foundClient.id}`)
-} else {
-  console.log('No matching client found');
-}
+      if (foundClient) {
+        navigation(`client/${foundClient.id}`)
+      } else {
+        console.log('No matching client found');
+      }
 
-setSearchQuery(newValue);
+      setSearchQuery(newValue);
 
 
 
@@ -523,12 +499,8 @@ setSearchQuery(newValue);
 
 
 
-  const [isChecked, setIsChecked] = useState(true);
 
-  const handleCheckboxChange = (event) => {
-    setIsChecked(event.target.checked);
-    event.target.checked ? changeLanguage('jp') : changeLanguage('en')
-  };
+
   return (
     <>
       <div className='container'>
@@ -540,23 +512,12 @@ setSearchQuery(newValue);
 
         <div className='contentContainer'>
 
-          
-          
-          
-          
-          <div className='detail' style={{display:"flex", justifyContent:"space-between", paddingRight:"20px"}}>
-            <p> {t("clintHead")}</p>
 
-            <div className="checkbox-wrapper-10">
-      <input 
-        type="checkbox" 
-        id="cb5" 
-        className="tgl tgl-flip" 
-        checked={isChecked} 
-        onChange={handleCheckboxChange} 
-      />
-      <label htmlFor="cb5" data-tg-on="English" data-tg-off="Japnes" className="tgl-btn"></label>
-    </div>
+
+
+
+          <div className='detail' style={{ display: "flex", justifyContent: "space-between", paddingRight: "20px" }}>
+            <p> {t("clintHead")}</p>
           </div>
           <div>
             <div className='addContainer'>
@@ -564,7 +525,7 @@ setSearchQuery(newValue);
                 <HiOutlinePlusCircle className='addIcon' />{t('btnOne')}
               </button>
 
-        
+
 
 
 
@@ -579,122 +540,84 @@ setSearchQuery(newValue);
 
             <div></div>
           </div>
-{  loading === true ? (
-          <div style={{ display: "flex", border: "1px solid gray" }}>
-          <Box sx={{ minWidth: 200 }}>
-          <FormControl fullWidth>
-  {/* <Autocomplete
-    id="demo-simple-select"
-    options={options}
-    getOptionLabel={(option) => option.label}
-    getOptionSelected={(option, value) => option === value} // Assuming options are simple strings
-    value={selectedFilter}
-    onChange={handleChange}
-    renderTags={() => null} // This will hide the selected value from being displayed as a chip or tag
-    renderInput={(params) => (
-      <TextField
-        {...params}
-        placeholder="Search By"
-        // sx={{
-        //   '& .MuiOutlinedInput-root': {
-        //     '& fieldset': {
-        //       borderColor: 'transparent',
-        //     },
-        //     '&:hover fieldset': {
-        //       borderColor: 'transparent', 
-        //     },
-        //     '&.Mui-focused fieldset': {
-        //       borderColor: 'transparent', 
-        //     },
-        //   },
-        // }}
-      />
-    )}
-  /> */}
+          {loading === true ? (
+            <div className='searchFilter' >
+              <Box sx={{ minWidth: 200, borderRight:"2px solix red"}}>
+                <FormControl fullWidth>
+                  <Autocomplete
+                    id="demo-simple-select"
+                    options={options}
+                    getOptionLabel={(option) => option.label}
+                    getOptionSelected={(option, value) => option === value} // Assuming options are simple strings
+                    value={searchType} // Use searchType as the value
+                    onChange={handleChange}
+                    renderTags={() => null} // This will hide the selected value from being displayed as a chip or tag
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        placeholder="Search By"
+                        sx={{
+                          '& .MuiOutlinedInput-root': {
+                            '& fieldset': {
+                              borderColor: 'transparent',
+                            },
+                            '&:hover fieldset': {
+                              borderColor: 'transparent',
+                            },
+                            '&.Mui-focused fieldset': {
+                              borderColor: 'transparent',
+                            },
+                          },
+                        }}
+                        InputProps={{
+                          ...params.InputProps,
+                          endAdornment: null, // Remove the clear button
+                        }}
+                      />
+                    )}
+                  />
+                </FormControl>
+              </Box>
+              <Box style={{ flexGrow: "1" }}>
+                <FormControl fullWidth>
+                  <Autocomplete
+                    options={searchdata}  // Ensure searchdata is an array
+                    getOptionLabel={(option) => option}  // Adjust based on the structure of your data
 
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        placeholder="Search Results"
+                        sx={{
+                          '& .MuiOutlinedInput-root': {
+                            '& fieldset': {
+                              borderColor: 'transparent',
+                            },
+                            '&:hover fieldset': {
+                              borderColor: 'transparent',
+                            },
+                            '&.Mui-focused fieldset': {
+                              borderColor: 'transparent',
+                            },
+                          },
+                        }}
+                        variant="outlined"
+                        onChange={(event) => setQuery(event.target.value)}
+                        onClick={(event) => {
+                          event.stopPropagation()
+                        }}
+                      />
+                    )}
 
-<Autocomplete
-  id="demo-simple-select"
-  options={options}
-  getOptionLabel={(option) => option.label}
-  getOptionSelected={(option, value) => option === value} // Assuming options are simple strings
-  value={searchType} // Use searchType as the value
-  onChange={handleChange}
-  renderTags={() => null} // This will hide the selected value from being displayed as a chip or tag
-  renderInput={(params) => (
-    <TextField
-      {...params}
-      placeholder="Search By"
-      sx={{
-          '& .MuiOutlinedInput-root': {
-            '& fieldset': {
-              borderColor: 'transparent',
-            },
-            '&:hover fieldset': {
-              borderColor: 'transparent', 
-            },
-            '&.Mui-focused fieldset': {
-              borderColor: 'transparent', 
-            },
-          },
-        }}
-      InputProps={{
-        ...params.InputProps,
-        endAdornment: null, // Remove the clear button
-      }}
-    />
-  )}
-/>
+                    onBlur={() => setOpen(false)}
+                    onChange={handleAutocompleteChange}
+                  />
+                </FormControl>
+              </Box>
+            </div>
 
-
-
-
-</FormControl>
-
-    </Box>
-
-
-
-            <Box style={{ flexGrow: "1" }}>
-              <FormControl fullWidth>
-                <Autocomplete
-                  options={searchdata}  // Ensure searchdata is an array
-                  getOptionLabel={(option) => option}  // Adjust based on the structure of your data
-              
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      placeholder="Search Results"
-                      sx={{
-          '& .MuiOutlinedInput-root': {
-            '& fieldset': {
-              borderColor: 'transparent',
-            },
-            '&:hover fieldset': {
-              borderColor: 'transparent', 
-            },
-            '&.Mui-focused fieldset': {
-              borderColor: 'transparent', 
-            },
-          },
-        }}
-                      variant="outlined"
-                      onChange={(event) => setQuery(event.target.value)}
-                      onClick={(event) =>{ 
-                        event.stopPropagation()
-                      }} 
-                    />
-                  )}
-                  
-                  onBlur={() => setOpen(false)} 
-                  onChange={handleAutocompleteChange}
-                />
-              </FormControl>
-            </Box>
-          </div>
-
-                ): null
-}
+          ) : null
+          }
           <div className='table'>
             <div>
               <TableContainer component={Paper} id="printable-table" {...getTableProps()}>
@@ -859,7 +782,7 @@ setSearchQuery(newValue);
                 {clientId ? `${t("modalTwoInOne")}` : `${t("modalTwoBtnSub")}`}
               </button>
               <button onClick={handleClose}>
-              {t("modalTwoBtn")}
+                {t("modalTwoBtn")}
               </button>
             </div>
           </div>

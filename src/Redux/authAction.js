@@ -1,6 +1,6 @@
-import { LOGIN ,LOGOUT, LANG} from "./actionTypes"
+import { LOGIN ,LOGOUT, LANG, SIDEBAR} from "./actionTypes"
 
-// ,  ,LANG}
+
 
 
 export const loginUser = ({ uid, JWT, message }) => {
@@ -23,5 +23,12 @@ export const language = ( lang ) => {
   return {
     type: LANG,
     payload: { lang },
+  };
+};
+
+export const sidebarDis = ( check ) => {
+  return {
+    type: SIDEBAR,
+    payload: { check },
   };
 };

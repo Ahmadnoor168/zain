@@ -1,5 +1,5 @@
 // // authReducer.js
-import { LOGIN,LOGOUT,LANG} from './actionTypes';
+import { LOGIN,LOGOUT,LANG, SIDEBAR} from './actionTypes';
 //  ,LANG
 
 
@@ -10,6 +10,7 @@ const initialState = {
   jwtToken: null,
   message: null,
   lang: "en",
+  check: false,
 };
 // uid, JWT, message
 const authReducer = (state = initialState, action) => {
@@ -36,6 +37,12 @@ const authReducer = (state = initialState, action) => {
         lang: action.payload.lang
       };
 
+
+      case SIDEBAR:
+      return {
+        ...state,
+        check: action.payload.check
+      };
 
       
     default:
