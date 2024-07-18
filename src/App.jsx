@@ -10,7 +10,7 @@ import Menu from "./Pages/Menu";
 import ShipmentDetail from "./Pages/ShipmentDetail";
 import Bill from './Pages/Bill';
 import SignIn from './Pages/AuthPages/signIn';
-import Signup from './Pages/AuthPages/signup';
+// import Signup from './Pages/AuthPages/signup';
 import ErrorMessage from "./ErrorMessage";
 import Layout from "./Pages/Layout";
 // Router for unauthenticated users
@@ -24,10 +24,10 @@ const routerAuth = createBrowserRouter([
         path: "",
         element: <SignIn />,
       },
-      {
-        path: "signup",
-        element: <Signup />,
-      },
+      // {
+      //   path: "signup",
+      //   element: <Signup />,
+      // },
     ],
   },
 ]);
@@ -44,7 +44,7 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "client/:id",
+        path: "client/:id/:email",
         element: <Client />,
       },
       {

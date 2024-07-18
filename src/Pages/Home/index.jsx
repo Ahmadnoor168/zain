@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, useCallback, useRef } from 'react';
+import React, { useState, useEffect, useMemo, useCallback, useRef } from 'react';
 import { FaRegEdit } from "react-icons/fa";
 import { HiOutlinePlusCircle } from "react-icons/hi";
 import Box from '@mui/material/Box';
@@ -17,13 +17,14 @@ import { FaRegSave } from "react-icons/fa";
 import { MdOutlineCancelPresentation } from "react-icons/md";
 import { Snackbar, Alert } from '@mui/material';
 import axios from 'axios';
-import "./styles.css";
+import "./index.css";
 import FormControl from '@mui/material/FormControl';
 import { TextField, Autocomplete } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { language } from '../../Redux/authAction';
 import { useDispatch } from 'react-redux';
+import Button from '@mui/material/Button';
 
 
 
@@ -57,28 +58,16 @@ const Home = () => {
   const [searchdata, setSearchdata] = useState('clientName');
   const jwtToken = useSelector((state) => state.authReducer.jwtToken);
   const lang = useSelector((state) => state.authReducer.lang);
-  const [query, setQuery] = useState([]); 
+  const [query, setQuery] = useState([]);
   const [searchType, setSearchType] = useState({ value: "clientName", label: 'client' },);
   const [loading, setLoading] = useState(false);
 
-  
+
   const handleClose = () => setOpen(false);
   const handleCloseModal = () => setEdit(false);
   const handleEditModalClose = () => setEdit(false);
 
 
-
-
-
-
-
-
-
-
-  // const changeLanguage = (lng) => {
-  //   i18n.changeLanguage(lng);
-  //   dispatch(language(lng));
-  // };
 
 
 
@@ -101,22 +90,9 @@ const Home = () => {
   };
 
 
-
-
-
-
-
   const handleCloseSnackbar = () => {
     setSnackbarOpen(false);
   };
-
-
-
-
-
-
-
-
 
 
   useEffect(() => {
@@ -380,12 +356,22 @@ const Home = () => {
 
     {
       Header: `${tb4Header}`,
-      Cell: ({ row }) => (
-        <div style={{ display: "flex" }}>
-          <button onClick={() => handleOpen(row.original)} className='iconButton'><FaRegEdit className='icon' /></button>
-          <NavLink to={`/client/${row.original.id}`} className='actionButton' >Action  </NavLink>
-        </div>
-      ),
+      Cell: ({ row }) => {
+        console.log("row-0-0-0-0-0-", row)
+        return (
+
+          <div style={{ display: "flex" }}>
+            <Button variant="contained" sx={{ minWidth: 2 }} onClick={() => handleOpen(row.original)} ><FaRegEdit className='icon' /></Button>
+            <Button
+              variant="outlined"
+              component={NavLink}
+              to={`/client/${row.original.id}/${row.original.emailAddress}`}
+              sx={{ml:1}}
+            >
+              Action
+            </Button>          </div>
+        )
+      },
     },
   ], [tb1Header]);
 
@@ -451,7 +437,6 @@ const Home = () => {
   }, [query, searchQuery, searchType.label, searchType.value]);
 
 
-
   const handleAutocompleteChange = (event, newValue) => {
 
     if (searchType.value === "clientName" && searchType.label === "client") {
@@ -504,54 +489,42 @@ const Home = () => {
   return (
     <>
       <div className='container'>
-
-
         <Sidebar />
-
-
-
         <div className='contentContainer'>
 
-
-
-
-
-          <div className='detail' style={{ display: "flex", justifyContent: "space-between", paddingRight: "20px" }}>
+          <div className='index-detail' >
             <p> {t("clintHead")}</p>
           </div>
-          <div>
-            <div className='addContainer'>
-              <button className='addClint' onClick={() => handleOpen(null)}>
-                <HiOutlinePlusCircle className='addIcon' />{t('btnOne')}
-              </button>
 
-
-
-
-
-            </div>
-
-
+          <Button
+            variant="contained"
+            sx={{ my: 3 }}
+            onClick={() => handleOpen(null)}
+            startIcon={<HiOutlinePlusCircle className='addIcon' />}
+          >
+            {t('btnOne')}
+          </Button>
 
 
 
 
 
 
-            <div></div>
-          </div>
+
+
           {loading === true ? (
             <div className='searchFilter' >
-              <Box sx={{ minWidth: 200, borderRight:"2px solix red"}}>
+              <Box sx={{ minWidth: 200 }}>
                 <FormControl fullWidth>
                   <Autocomplete
                     id="demo-simple-select"
                     options={options}
-                    getOptionLabel={(option) => option.label}
-                    getOptionSelected={(option, value) => option === value} // Assuming options are simple strings
-                    value={searchType} // Use searchType as the value
+                    getOptionLabel={(option) => (option && option.label) ? option.label : null} // Handle null or undefined options
+                    getOptionSelected={(option, value) => option === value}
+                    value={searchType || null}
                     onChange={handleChange}
-                    renderTags={() => null} // This will hide the selected value from being displayed as a chip or tag
+                    renderTags={() => null}
+                    sx={{ width: 200 }}
                     renderInput={(params) => (
                       <TextField
                         {...params}
@@ -560,29 +533,54 @@ const Home = () => {
                           '& .MuiOutlinedInput-root': {
                             '& fieldset': {
                               borderColor: 'transparent',
+                              borderRight: 1,
+                              borderRightColor: "#9098a9",
                             },
                             '&:hover fieldset': {
                               borderColor: 'transparent',
+                              borderRight: 1,
+                              borderRightColor: "#9098a9"
+
                             },
                             '&.Mui-focused fieldset': {
-                              borderColor: 'transparent',
+                              borderRight: 2,
+                              borderRightColor: "#189ce4",
+
                             },
                           },
+                          '&.Mui-focused': {
+                            '& .MuiOutlinedInput-notchedOutline': {
+                            },
+                          },
+
                         }}
                         InputProps={{
                           ...params.InputProps,
-                          endAdornment: null, // Remove the clear button
+                          endAdornment: (
+                            <>
+                              {params.InputProps.endAdornment?.props.children[1] &&
+                                React.cloneElement(params.InputProps.endAdornment.props.children[1], {
+                                  style: { color: 'blue', position: "relative", left: "40px" } // Change the color of the icon
+                                })}
+                            </>
+                          ),
                         }}
                       />
                     )}
                   />
+
+
                 </FormControl>
               </Box>
+
+
+
+
               <Box style={{ flexGrow: "1" }}>
                 <FormControl fullWidth>
                   <Autocomplete
-                    options={searchdata}  // Ensure searchdata is an array
-                    getOptionLabel={(option) => option}  // Adjust based on the structure of your data
+                    options={searchdata}
+                    getOptionLabel={(option) => option}
 
                     renderInput={(params) => (
                       <TextField
@@ -618,6 +616,18 @@ const Home = () => {
 
           ) : null
           }
+
+
+
+
+
+
+
+
+
+
+
+
           <div className='table'>
             <div>
               <TableContainer component={Paper} id="printable-table" {...getTableProps()}>
@@ -629,11 +639,11 @@ const Home = () => {
                           <TableCell key={column.getHeaderProps().key} {...column.getHeaderProps(column.getSortByToggleProps())}>
                             <span style={{ fontWeight: "600" }}>  {column.render('Header')}  </span>
                             <span style={{ marginLeft: '5px' }}>
-                              <span style={{ color: column.isSorted && !column.isSortedDesc ? 'black' : 'lightgrey' }}>
-                                🔼
+                              <span style={{ fontSize: "18px", color: column.isSorted && !column.isSortedDesc ? 'black' : 'lightgrey' }}>
+                                ↿
                               </span>
-                              <span style={{ color: column.isSorted && column.isSortedDesc ? 'black' : 'lightgrey' }}>
-                                🔽
+                              <span style={{ fontSize: "18px", color: column.isSorted && column.isSortedDesc ? 'black' : 'lightgrey' }}>
+                                ⇂
                               </span>
                             </span>
                           </TableCell>
@@ -684,11 +694,16 @@ const Home = () => {
             top: '50%',
             left: '50%',
             transform: 'translate(-50%, -50%)',
-            width: "clamp(300px, 100%, 800px)",
-            overflow: "auto",
+            width: "clamp(300px, 100%, 650px)",
             maxHeight: '90vh',
             outline: "none",
-            borderRadius: "6px"
+            borderRadius: "6px",
+            overflowY: "auto", // Enable vertical scrolling
+            '&::-webkit-scrollbar': {
+              display: 'none', // Hide scrollbar for WebKit browsers (Chrome, Safari, etc.)
+            },
+            msOverflowStyle: 'none', // Hide scrollbar for IE and Edge
+            scrollbarWidth: 'none', // Hide scrollbar for Firefox
           }}
           className="modal"
 
@@ -749,20 +764,34 @@ const Home = () => {
               rows={4}
             />
           </div>
-          <div>
+          {/* <div>
             <label>{t("modalTwoInSeven")}</label>
             <input
               type="file"
               accept="image/*"
               onChange={(e) => setImage(e.target.files[0])}
             />
+          </div> */}
+          <div>
+            <label htmlFor="fileInput">{t("modalTwoInSeven")}</label>
+            <input
+              type="file"
+              id="fileInput"
+              accept="image/*"
+              style={{ display: 'none' }} // Hide the original file input
+              onChange={(e) => setImage(e.target.files[0])} // Call function on file change
+            />
+            <button className='img-btn' onClick={() => document.getElementById('fileInput').click()} >
+              Choose File
+            </button>
+            {/* <span>{fileName}</span> Display selected file name */}
           </div>
-
 
           <div>
             <label>{t("modalTwoInEight")}</label>
             <Select
-              sx={{ width: "360px" }}
+              sx={{ border: "none" }}
+              className='section-drop'
               value={selectedMemo}
               onChange={(e) => setSelectedMemo(e.target.value)}
             >
@@ -775,114 +804,112 @@ const Home = () => {
 
           </div>
 
-
           <div>
             <div className='modalButton'>
-              <button onClick={handleSubmit}>
-                {clientId ? `${t("modalTwoInOne")}` : `${t("modalTwoBtnSub")}`}
-              </button>
-              <button onClick={handleClose}>
+              <Button onClick={handleSubmit} variant="contained">
+                {clientId ? t("modalTwoInOne") : t("modalTwoBtnSub")}
+              </Button>
+              <Button onClick={handleClose} variant="outlined">
                 {t("modalTwoBtn")}
-              </button>
+              </Button>
             </div>
           </div>
-
 
         </Box>
       </Modal>
 
 
-      return (
-      <>
-        {/* ...existing code... */}
 
-        <Modal
-          open={edit}
-          onClose={handleEditModalClose}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-          BackdropProps={{ onClick: handleBackdropClick }}
-        >
-          <Box sx={{
-            position: 'absolute',
-            bgcolor: 'background.paper',
-            boxShadow: 24,
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            width: "clamp(300px, 100%, 800px)",
-            overflow: "auto",
-            maxHeight: '90vh',
-            outline: "none",
-            borderRadius: "6px",
-            padding: "10px 20px 40px 20px"
-          }}>
-            <p className='modalHeading'>Select Memo</p>
-            <div style={{ maxWidth: "500px", margin: "auto" }}>
-              {selectedMemos.map((memo) => (
-                <div className='editBar' key={memo.id}>
-                  <div className='editOne'>
-                    {editingMemoId === memo.id ? (
-                      <input
-                        type="text"
-                        value={project}
-                        onChange={(e) => setProject(e.target.value)}
-                        placeholder="Project"
-                      />
-                    ) : (
-                      <p>{memo.project}</p>
-                    )}
-                  </div>
-
-
-
-
-                  <div className='editTwo'>
-                    {editingMemoId === memo.id ? (
-                      <button onClick={() => handleUpdateMemo(memo)}>
-                        <FaRegSave className='editButton' />
-                      </button>
-                    ) : (
-                      <button onClick={() => {
-                        setEditingMemoId(memo.id);
-                        setProject(memo.project);
-                      }}>
-                        <FaEdit className='editButton' />
-                      </button>
-                    )}
-
-
-                    {editingMemoId === memo.id ? (
-                      <button onClick={cancelSave}>
-                        <MdOutlineCancelPresentation className='editButton' />
-                      </button>
-                    ) : (
-                      <button onClick={() => deleteMemo(memo.id)}>
-                        <RiDeleteBin6Line className='deleteButton' />
-                      </button>
-                    )}
-
-
-
-
-                  </div>
+      <Modal
+        open={edit}
+        onClose={handleEditModalClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+        BackdropProps={{ onClick: handleBackdropClick }}
+      >
+        <Box sx={{
+          position: 'absolute',
+          bgcolor: 'background.paper',
+          boxShadow: 24,
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          width: "clamp(300px, 100%, 650px)",
+          maxHeight: '90vh',
+          outline: "none",
+          borderRadius: "6px",
+          overflowY: "auto", // Enable vertical scrolling
+          '&::-webkit-scrollbar': {
+            display: 'none', // Hide scrollbar for WebKit browsers (Chrome, Safari, etc.)
+          },
+          msOverflowStyle: 'none', // Hide scrollbar for IE and Edge
+          scrollbarWidth: 'none',
+          padding: "20px 0" // Hide scrollbar for Firefox
+        }}>
+          <p className='modalHeading'>Select Memo</p>
+          <div style={{ maxWidth: "500px", margin: "auto" }}>
+            {selectedMemos.map((memo) => (
+              <div className='editBar' key={memo.id} >
+                <div className='editOne'>
+                  {editingMemoId === memo.id ? (
+                    <input
+                      type="text"
+                      value={project}
+                      onChange={(e) => setProject(e.target.value)}
+                      placeholder="Project"
+                      className='modal-input'
+                    />
+                  ) : (
+                    <p>{memo.project}</p>
+                  )}
                 </div>
-              ))}
-            </div>
 
 
 
-            <div className='modalButton' style={{ marginTop: "30px" }}>
-              <button onClick={handleCloseModal}>
-                Cancel
-              </button>
-            </div>
-          </Box>
-        </Modal>
 
-        {/* ...existing code... */}
-      </>
-      );
+                <div className='editTwo'>
+                  {editingMemoId === memo.id ? (
+                    <button onClick={() => handleUpdateMemo(memo)}>
+                      <FaRegSave className='editButton' />
+                    </button>
+                  ) : (
+                    <button onClick={() => {
+                      setEditingMemoId(memo.id);
+                      setProject(memo.project);
+                    }}>
+                      <FaEdit className='editButton' />
+                    </button>
+                  )}
+
+
+                  {editingMemoId === memo.id ? (
+                    <button onClick={cancelSave}>
+                      <MdOutlineCancelPresentation className='editButton' />
+                    </button>
+                  ) : (
+                    <button onClick={() => deleteMemo(memo.id)}>
+                      <RiDeleteBin6Line className='deleteButton' />
+                    </button>
+                  )}
+
+
+
+
+                </div>
+              </div>
+            ))}
+          </div>
+
+
+
+          <div className='modalButton' style={{ marginTop: "30px" }}>
+            <button onClick={handleCloseModal}>
+              Cancel
+            </button>
+          </div>
+        </Box>
+      </Modal>
+
 
       <Snackbar open={snackbarOpen} autoHideDuration={6000} onClose={handleCloseSnackbar}>
         <Alert onClose={handleCloseSnackbar} severity={snackbarSeverity}>

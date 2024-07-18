@@ -37,6 +37,7 @@ const Menu = () => {
 
   useEffect(() => {
     fetchMemos();
+    
   }, []);
 
   const fetchMemos = async () => {
@@ -56,6 +57,9 @@ const Menu = () => {
       console.error('Error:', error);
     }
   };
+
+
+
 
   const handleOpen = () => {
     setIsEditing(false);
